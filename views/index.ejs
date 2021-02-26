@@ -1,41 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wack</title>
-</head>
-<body>
-  <header>
-    <div class="container nav__container">
-      <span>whack</span>
-      <nav>
-        <ul>
-          <li>home</li>
-          <li>about</li>
-          <li>contact</li>
-        </ul>
-        <ul>
-          <li>sign in</li>
-          <li>sign up</li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <section class="first-section">
-    <h1>Welcome to wack:</h1>
-    <h2>where everything but work happens</h2>
-  </section>
-  <section class="second-section">
-    <ul id="messages"></ul>
-    <form id="form" autocomplete="off">
-      <input id="input" autocomplete="off" />
-      <button>Post</button>
-    </form>
-  </section>
-  <!-- ----------JAVASCRIPT---------- -->
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="public/scripts/script.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wack</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="public/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container nav__container">
+        <span>whack</span>
+        <nav>
+          <ul class="nav__list nav__list--primary">
+            <li class="nav__item"><a class="nav__link" href="#">home</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">about</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">contact</a></li>
+          </ul>
+          <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link" href="#">sign in</a></li>
+            <li class="nav__item">
+              <a class="nav__link btn nav__btn" href="#">sign up</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section class="first-section">
+      <div class="container row">
+        <div class="col">
+          <h1 class="main-title">Welcome to wack:</h1>
+          <h2 class="main-title">where everything but work happens</h2>
+        </div>
+      </div>
+    </section>
+    <section class="second-section">
+      <div class="container row">
+        <div class="col">
+          <ul id="messages"></ul>
+        </div>
+      </div>
+    </section>
+    <section class="third-section">
+      <div class="container row">
+        <div class="col">
+          <form id="form" autocomplete="off">
+            <input id="input" autocomplete="off" />
+            <button>Post</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- ----------JAVASCRIPT---------- -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="public/scripts/script.js"></script>
+  </body>
 </html>
