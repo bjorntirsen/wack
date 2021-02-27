@@ -34,20 +34,6 @@ header {
   max-width: 1200px;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-}
-
-.col__sidebar {
-  width: 20%;
-  padding: 1rem;
-}
-
-.col__main {
-  width: 70%;
-}
-
 .nav__container {
   padding: 0.8em 0;
 }
@@ -91,6 +77,10 @@ header {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 5vw, 5.625rem);
+}
+
+.col__sidebar {
+  padding: 1rem;
 }
 
 .channel__li {
@@ -155,5 +145,18 @@ header {
 
   .nav__list--primary {
     margin-right: 2.5em;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .col__sidebar {
+    width: 20%;
+  }
+  
+  .col__main {
+    width: 70%;
   }
 }
