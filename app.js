@@ -1,5 +1,6 @@
 //Core modules
 const path = require('path');
+const fs = require('fs');
 //Third party modules
 const express = require('express');
 const app = express();
@@ -14,8 +15,15 @@ app.set('view engine', 'ejs');
 //Setting up access to public folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
+//Let express read json
+app.use(express.json());
+
+const channels = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/channel-list.json`)
+);
+
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', { channels });
 });
 
 io.on('connection', (socket) => {

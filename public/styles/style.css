@@ -41,6 +41,7 @@ header {
 
 .col__sidebar {
   width: 20%;
+  padding: 1rem;
 }
 
 .col__main {
@@ -90,6 +91,14 @@ header {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 5vw, 5.625rem);
+}
+
+.channel__li {
+  list-style-type: none;
+}
+
+#channels {
+  padding: 0;
 }
 
 #form {

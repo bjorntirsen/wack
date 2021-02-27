@@ -44,8 +44,11 @@
     <section class="second-section">
       <div class="container main__container row">
         <div class="col__sidebar">
+          <h3 class="channel-title">Channels</h3>
           <ul id="channels">
-            Channel 1
+            <% channels.forEach(channel => { %>
+            <li class="channel__li">#<%= channel.name %></li>
+            <% }) %>
           </ul>
         </div>
         <div class="col__main">

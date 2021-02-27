@@ -1,0 +1,54 @@
+[
+  {
+    "id": 0,
+    "name": "Frontend 1",
+    "posts": [
+      {
+        "id": 0,
+        "timestamp": "2021-02-22",
+        "by_user_id": 0,
+        "text_content": "Jag såg det här YouTube-klippet och tyckte det var bra. https://youtu.be/iX_QyjdctsQ",
+        "replies": []
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Affärsmannaskap",
+    "posts": [
+      {
+        "id": 0,
+        "timestamp": "2021-02-22",
+        "by_user_id": 0,
+        "text_content": "Jag såg det här YouTube-klippet och tyckte det var bra. https://youtu.be/iX_QyjdctsQ",
+        "replies": []
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Frontend 2",
+    "posts": [
+      {
+        "id": 0,
+        "timestamp": "2021-02-22",
+        "by_user_id": 0,
+        "text_content": "Jag såg det här YouTube-klippet och tyckte det var bra. https://youtu.be/iX_QyjdctsQ",
+        "replies": []
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Frontend 3",
+    "posts": [
+      {
+        "id": 0,
+        "timestamp": "2021-02-22",
+        "by_user_id": 0,
+        "text_content": "Jag såg det här YouTube-klippet och tyckte det var bra. https://youtu.be/iX_QyjdctsQ",
+        "replies": []
+      }
+    ]
+  }
+]
