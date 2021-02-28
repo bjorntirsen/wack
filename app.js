@@ -22,6 +22,10 @@ const channels = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/channel-list.json`)
 );
 
+const channels_content = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/channel-content.json`)
+);
+
 app.get('/', (req, res) => {
   res.render('index', { channels });
 });

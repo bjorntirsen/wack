@@ -47,7 +47,9 @@
           <h3 class="">Channels</h3>
           <ul id="channels">
             <% channels.forEach(channel => { %>
-            <li class="channel__li">#<%= channel.name %></li>
+            <li class="channel__li">
+              <a href="/<%= channel.id %>">#<%= channel.name %></a>
+            </li>
             <% }) %>
           </ul>
         </div>
