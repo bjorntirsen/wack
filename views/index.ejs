@@ -44,15 +44,20 @@
     <section class="second-section">
       <div class="container main__container row">
         <div class="col__sidebar">
-          <h3 class="channel-title">Channels</h3>
+          <h3 class="">Channels</h3>
           <ul id="channels">
             <% channels.forEach(channel => { %>
             <li class="channel__li">#<%= channel.name %></li>
             <% }) %>
           </ul>
         </div>
-        <div class="col__main">
-          <ul id="messages"></ul>
+        <div class="col__posts">
+          <h3 class="col__header">Posts in channel</h3>
+          <ul id="posts"></ul>
+        </div>
+        <div class="col__users">
+          <h3 class="col__header">Users Online</h3>
+          <ul id="users"></ul>
         </div>
       </div>
     </section>

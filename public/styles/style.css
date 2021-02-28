@@ -29,7 +29,7 @@ header {
 
 .container {
   margin: 0 auto;
-  padding: 2em 0;
+  padding: 1em 0;
   width: 80%;
   max-width: 1200px;
 }
@@ -76,7 +76,7 @@ header {
 .main-title {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
-  font-size: clamp(2rem, 5vw, 5.625rem);
+  font-size: clamp(2rem, 4vw, 5rem);
 }
 
 .col__sidebar {
@@ -89,6 +89,12 @@ header {
 
 #channels {
   padding: 0;
+  font-size: 1rem;
+}
+
+.col__header {
+  padding-left: 1rem;
+  font-size: 0.8rem;
 }
 
 #form {
@@ -119,21 +125,25 @@ header {
   outline: none;
 }
 
-#messages {
+#posts, #users {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
 
-#messages > li {
+#posts > li, #users > li {
   padding: 0.5rem 1rem;
   margin: 0.5rem;
   background-color: lightgray;
 }
 
+#users > li {
+  font-size: 0.7rem;
+}
+
 /* Media queries */
 
-@media (min-width: 700px) {
+@media (min-width: 800px) {
   .nav__container {
     display: flex;
     justify-content: space-between;
@@ -156,7 +166,11 @@ header {
     width: 20%;
   }
   
-  .col__main {
-    width: 70%;
+  .col__posts {
+    width: 65%;
+  }
+
+  .col__users {
+    width: 15%;
   }
 }

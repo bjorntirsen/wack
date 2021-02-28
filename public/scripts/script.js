@@ -11,16 +11,23 @@ form.addEventListener('submit', (e) => {
   }
 });
 
-socket.on('chat message', function (msg) {
+socket.on('chat message', (msg) => {
   const item = document.createElement('li');
   item.textContent = msg;
-  messages.appendChild(item);
+  posts.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
 
-socket.on('connection', function () {
+socket.on('connection', () => {
   const item = document.createElement('li');
-  item.textContent = 'A user connected';
-  messages.appendChild(item);
+  item.textContent = 'User connected';
+  users.appendChild(item);
+  window.scrollTo(0, document.body.scrollHeight);
+});
+
+socket.on('disconnected', () => {
+  const item = document.createElement('li');
+  item.textContent = 'User disconnected';
+  users.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
