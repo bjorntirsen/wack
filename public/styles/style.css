@@ -64,9 +64,40 @@ header {
 }
 
 .btn {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  text-decoration: none;
   padding: 0.2em 0.8em;
   border-radius: 100px;
   border: none;
+  text-transform: uppercase;
+  background-color: lightgray;
+}
+
+.btn__medium {
+  font-size: 1.5rem;
+}
+
+.btn__large {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+
+.text-muted {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.btn:hover {
+  text-decoration: none;
+  opacity: 0.5;
 }
 
 .main__container {
@@ -96,6 +127,12 @@ header {
 .col__header {
   padding-left: 1rem;
   font-size: 0.8rem;
+}
+
+.card{
+  width: 400px;
+  max-width: 95%;
+  margin: 0 auto;
 }
 
 #form {
