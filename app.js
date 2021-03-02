@@ -33,6 +33,22 @@ channelSchema.methods.created = function () {
 //Making a model of that schema
 const Channel = mongoose.model('Channel', channelSchema);
 
+//Creating a post schema
+const postSchema = new mongoose.Schema({
+  by: String,
+  content: String,
+  timestamp: {}
+});
+//And a method
+postSchema.methods.created = function () {
+  const message = this.name
+    ? 'Post created: ' + this.name
+    : "The post doesn't have a name";
+  console.log(message);
+};
+//Making a model of that schema
+const Post = mongoose.model('Post', postSchema);
+
 //Creating a http server
 const http = require('http').Server(app);
 //Setting up Socket.IO with the server
@@ -93,7 +109,11 @@ app.get('/channels/:id', async (req, res) => {
 });
 
 app.post('/channels/:id', async (req, res) => {
-  const currentDate = new Date();
+  const post = new Post({
+    by: req.body.user,
+    description: req.body.content || '',
+    timestamp: new Date(),
+  });
   let channels = [];
   await Channel.find((err, data) => {
     if (err) return console.error(err);
@@ -104,8 +124,7 @@ app.post('/channels/:id', async (req, res) => {
     if (err) return console.error(err);
     channel = data;
   });
-  console.log(req.body)
-  console.log(currentDate)
+  console.log(post)
   res.render('channel', { channel, channels, cssdir: '../' });
 });
 
