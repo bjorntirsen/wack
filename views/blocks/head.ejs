@@ -1,4 +1,5 @@
 <% if (typeof title==='undefined' ) { title='Wack' } %>
+<% if (typeof cssdir==='undefined' ) { cssdir='' } %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +12,6 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="public/styles/style.css" />
+    <link rel="stylesheet" href="<%= cssdir %>public/styles/style.css" />
   </head>
   <body>

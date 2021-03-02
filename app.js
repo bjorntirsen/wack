@@ -1,11 +1,12 @@
 //Core modules
 const path = require('path');
 const fs = require('fs');
-//Third party modules
+//Third party module
 const express = require('express');
 const app = express();
-//Setting up Socket.IO
+//Creating a http server
 const http = require('http').Server(app);
+//Setting up Socket.IO with the server
 const io = require('socket.io')(http);
 
 //Setting up EJS
@@ -27,7 +28,20 @@ const channels_content = JSON.parse(
 );
 
 app.get('/', (req, res) => {
-  res.render('index', { channels });
+  res.render('index');
+});
+
+app.get('/home', (req, res) => {
+  res.render('home', { channels });
+});
+
+app.get('/channels/create', (req, res) => {
+  res.render('ch_create.ejs', {cssdir: '../'})
+})
+
+app.get('/channels/:id', (req, res) => {
+  //const channel_data
+  res.render('channels', { channels });
 });
 
 io.on('connection', (socket) => {
