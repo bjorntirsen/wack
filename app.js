@@ -30,7 +30,7 @@ channelSchema.methods.created = function () {
     : "The channel doesn't have a name";
   console.log(message);
 };
-//Making a model of that scheema
+//Making a model of that schema
 const Channel = mongoose.model('Channel', channelSchema);
 
 
@@ -47,8 +47,7 @@ app.set('view engine', 'ejs');
 //Setting up access to public folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-//Let express read json
-app.use(express.json());
+//Let express read html forms
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {

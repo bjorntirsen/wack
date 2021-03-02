@@ -1,38 +1,39 @@
-<%- include('blocks/head', { title: 'Wack - home' }) -%>
-<%- include('blocks/navbar') -%> 
-    <section class="second-section">
-      <div class="container main__container row">
-        <div class="col__sidebar">
-          <h3 class="">Channels</h3>
-          <ul id="channels">
-            <% channels.forEach(channel => { %>
-            <li class="channel__li">
-              <a href="channels/<%= channel.id %>">#<%= channel.name %></a>
-            </li>
-            <% }) %>
-            <li class="channel__li"><a href="/channels/create">Create channel</a></li>
-          </ul>
-        </div>
-        <div class="col__posts">
-          <h3 class="col__header">Posts in channel</h3>
-          <ul id="posts"></ul>
-        </div>
-        <div class="col__users">
-          <h3 class="col__header">Users Online</h3>
-          <ul id="users"></ul>
-        </div>
-      </div>
-    </section>
-    <section class="third-section">
-      <div class="container main__container row">
-        <form id="form" autocomplete="off">
-          <input id="input" autocomplete="off" />
-          <button>Post</button>
-        </form>
-      </div>
-    </section>
-    <!-- ----------JAVASCRIPT---------- -->
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="public/scripts/script.js"></script>
-  </body>
-</html>
+<%- include('blocks/head', { title: 'Wack - home' }) -%> <%-
+include('blocks/navbar') -%>
+<section class="second-section">
+  <div class="container main__container row">
+    <div class="col__sidebar">
+      <h3 class="">Channels</h3>
+      <ul id="channels">
+        <% channels.forEach(channel => { %>
+        <li class="channel__li">
+          <a href="channels/<%= channel.id %>">#<%= channel.name %></a>
+        </li>
+        <% }) %>
+        <li class="channel__li">
+          <a href="/channels/create">Create channel</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col__posts">
+      <h3 class="col__header">Posts in channel</h3>
+      <ul id="posts"></ul>
+    </div>
+    <div class="col__users">
+      <h3 class="col__header">Users Online</h3>
+      <ul id="users"></ul>
+    </div>
+  </div>
+</section>
+<section class="third-section">
+  <div class="container main__container row">
+    <form id="form" autocomplete="off">
+      <input id="input" autocomplete="off" />
+      <button>Post</button>
+    </form>
+  </div>
+</section>
+<!-- ----------JAVASCRIPT---------- -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="public/scripts/script.js"></script>
+<%- include('blocks/bottom') -%>
