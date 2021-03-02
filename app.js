@@ -21,7 +21,7 @@ const channelSchema = new mongoose.Schema({
   name: String,
   description: String,
   private: false,
-  posts: []
+  posts: [],
 });
 //And a method
 channelSchema.methods.created = function () {
@@ -32,8 +32,6 @@ channelSchema.methods.created = function () {
 };
 //Making a model of that schema
 const Channel = mongoose.model('Channel', channelSchema);
-
-
 
 //Creating a http server
 const http = require('http').Server(app);
@@ -55,10 +53,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home', async (req, res) => {
-  let channels = []
-  await Channel.find(function (err, data) {
+  let channels = [];
+  await Channel.find((err, data) => {
     if (err) return console.error(err);
-    channels = data
+    channels = data;
   });
   res.render('home', { channels });
 });
@@ -80,9 +78,35 @@ app.post('/channels/create', (req, res) => {
   res.redirect('/home');
 });
 
-app.get('/channels/:id', (req, res) => {
-  //const channel_data
-  res.render('channels', { channels });
+app.get('/channels/:id', async (req, res) => {
+  let channels = [];
+  await Channel.find((err, data) => {
+    if (err) return console.error(err);
+    channels = data;
+  });
+  let channel = {};
+  await Channel.findOne({ _id: req.params.id }, (err, data) => {
+    if (err) return console.error(err);
+    channel = data;
+  });
+  res.render('channel', { channel, channels, cssdir: '../' });
+});
+
+app.post('/channels/:id', async (req, res) => {
+  const currentDate = new Date();
+  let channels = [];
+  await Channel.find((err, data) => {
+    if (err) return console.error(err);
+    channels = data;
+  });
+  let channel = {};
+  await Channel.findOne({ _id: req.params.id }, (err, data) => {
+    if (err) return console.error(err);
+    channel = data;
+  });
+  console.log(req.body)
+  console.log(currentDate)
+  res.render('channel', { channel, channels, cssdir: '../' });
 });
 
 io.on('connection', (socket) => {
@@ -100,6 +124,6 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(3000, function () {
+http.listen(3000, () => {
   console.log('App running on port 3000');
 });

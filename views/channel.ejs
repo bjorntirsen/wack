@@ -1,0 +1,49 @@
+<%- include('blocks/head', { title: 'Wack - home' }) -%> <%-
+include('blocks/navbar') -%>
+<section class="">
+  <div class="container main__container row">
+    <div class="col__sidebar">
+      <h3 class="">Channels</h3>
+      <ul id="channels">
+        <% channels.forEach(channel => { %>
+        <li class="channel__li">
+          <a href="../channels/<%= channel.id %>">#<%= channel.name %></a>
+        </li>
+        <% }) %>
+        <li class="channel__li">
+          <a href="/channels/create">Create channel</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col__posts">
+      <h2><%= channel.name %></h2>
+      <h3 class="col__header">Posts in channel</h3>
+      <ul id="posts">
+        <% if (channel.posts.length > 0) { %> <% posts.forEach(post => { %>
+        <li class="channel__li">
+          <h4><%= post.by %></h4>
+          <span><%= post.timestamp %></span>
+          <p><%= post.content %></p>
+        </li>
+        <% }) %> <% } %>
+      </ul>
+    </div>
+    <div class="col__users">
+      <h3 class="col__header">Users Online</h3>
+      <ul id="users"></ul>
+    </div>
+  </div>
+</section>
+<section class="form">
+  <div class="container main__container row">
+    <form method="post" action="../channels/<%= channel.id %>" autocomplete="off">
+      <input name="user" autocomplete="off" placeholder="User name" /><br>
+      <textarea name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" /></textarea>
+      <input type="submit" value="Post" />
+    </form>
+  </div>
+</section>
+<!-- ----------JAVASCRIPT---------- -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="public/scripts/script.js"></script>
+<%- include('blocks/bottom') -%>
