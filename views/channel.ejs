@@ -19,7 +19,7 @@ include('blocks/navbar') -%>
       <h2><%= channel.name %></h2>
       <h3 class="col__header">Posts in channel</h3>
       <ul id="posts">
-        <% if (channel.posts.length > 0) { %> <% posts.forEach(post => { %>
+        <% if (channel.posts.length > 0) { %> <% channel.posts.forEach(post => { %>
         <li class="channel__li">
           <h4><%= post.by %></h4>
           <span><%= post.timestamp %></span>
@@ -34,12 +34,15 @@ include('blocks/navbar') -%>
     </div>
   </div>
 </section>
-<section class="form">
+<section >
   <div class="container main__container row">
-    <form method="post" action="../channels/<%= channel.id %>" autocomplete="off">
-      <input name="user" autocomplete="off" placeholder="User name" /><br>
-      <textarea name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" /></textarea>
-      <input type="submit" value="Post" />
+    <form class="form" method="post" action="../channels/<%= channel.id %>" autocomplete="off">
+      <div class="f-grow-1">
+        <input class="w-100" name="user" autocomplete="off" placeholder="User name" /><br>
+        <textarea class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" /></textarea>
+      </div>
+      
+      <input class="btn btn__post" type="submit" value="Post" />
     </form>
   </div>
 </section>

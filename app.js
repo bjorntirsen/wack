@@ -37,7 +37,7 @@ const Channel = mongoose.model('Channel', channelSchema);
 const postSchema = new mongoose.Schema({
   by: String,
   content: String,
-  timestamp: {}
+  timestamp: {},
 });
 //And a method
 postSchema.methods.created = function () {
@@ -114,6 +114,10 @@ app.post('/channels/:id', async (req, res) => {
     description: req.body.content || '',
     timestamp: new Date(),
   });
+  await Channel.updateOne(
+    { _id: req.params.id },
+    { $push: { posts: post } }
+  );
   let channels = [];
   await Channel.find((err, data) => {
     if (err) return console.error(err);
@@ -124,8 +128,10 @@ app.post('/channels/:id', async (req, res) => {
     if (err) return console.error(err);
     channel = data;
   });
-  console.log(post)
-  res.render('channel', { channel, channels, cssdir: '../' });
+  console.log(post);
+  console.log(channel)
+  //res.render('channel', { channel, channels, cssdir: '../' });
+  res.render(`channel`, { channel, channels, cssdir: '../' })
 });
 
 io.on('connection', (socket) => {

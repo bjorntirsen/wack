@@ -82,6 +82,12 @@ header {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
+.btn__post {
+  width: 100px;
+  height: 50px;
+  margin: auto;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -147,6 +153,19 @@ header {
 .form {
   position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  height: 8rem;
+}
+
+.f-grow-1 {
+  flex-grow: 1;
+}
+
+.w-100 {
+  width: 100%;
+  max-width: 700px;
 }
 
 #input {
