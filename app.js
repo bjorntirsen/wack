@@ -111,7 +111,7 @@ app.get('/channels/:id', async (req, res) => {
 app.post('/channels/:id', async (req, res) => {
   const post = new Post({
     by: req.body.user,
-    description: req.body.content || '',
+    content: req.body.content || '',
     timestamp: new Date(),
   });
   await Channel.updateOne(
