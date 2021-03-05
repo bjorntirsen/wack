@@ -78,24 +78,19 @@ app.get('/channels/:id', async (req, res) => {
   res.render('channel', { channel, channels, cssdir: '../' });
 });
 
-app.post('/channels/:id', async (req, res) => {
+app.post('/channels/:id', (req, res) => {
   const post = new Post({
     by: req.body.user,
-    content: req.body.content || '',
-    timestamp: new Date(),
+    content: req.body.content,
   });
-  await Channel.updateOne({ _id: req.params.id }, { $push: { posts: post } });
-  let channels = [];
-  await Channel.find((err, data) => {
-    if (err) return console.error(err);
-    channels = data;
-  });
-  let channel = {};
-  await Channel.findOne({ _id: req.params.id }, (err, data) => {
-    if (err) return console.error(err);
-    channel = data;
-  });
-  res.render(`channel`, { channel, channels, cssdir: '../' });
+  Channel.updateOne(
+    { _id: req.params.id },
+    { $push: { posts: post } },
+    (err) => {
+      if (err) return console.error(err);
+      res.redirect(`/channels/${req.params.id}`);
+    }
+  );
 });
 
 io.on('connection', (socket) => {
