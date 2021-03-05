@@ -68,13 +68,13 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/home', async (req, res) => {
-  let channels = [];
-  await Channel.find((err, data) => {
+app.get('/home', (req, res) => {
+  Channel.find((err, data) => {
     if (err) return console.error(err);
     channels = data;
+    console.log(data)
+    res.render('home', { channels });
   });
-  res.render('home', { channels });
 });
 
 app.get('/channels/create', (req, res) => {
@@ -90,8 +90,8 @@ app.post('/channels/create', (req, res) => {
   channel.save((err) => {
     if (err) return console.error(err);
     channel.created();
+    res.redirect('/home');
   });
-  res.redirect('/home');
 });
 
 app.get('/channels/:id', async (req, res) => {
