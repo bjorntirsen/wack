@@ -16,38 +16,8 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-//Creating a channel schema
-const channelSchema = new mongoose.Schema({
-  name: String,
-  description: String,
-  private: false,
-  posts: [],
-});
-//And a method
-channelSchema.methods.created = function () {
-  const message = this.name
-    ? 'Channel created: ' + this.name
-    : "The channel doesn't have a name";
-  console.log(message);
-};
-//Making a model of that schema
-const Channel = mongoose.model('Channel', channelSchema);
-
-//Creating a post schema
-const postSchema = new mongoose.Schema({
-  by: String,
-  content: String,
-  timestamp: {},
-});
-//And a method
-postSchema.methods.created = function () {
-  const message = this.name
-    ? 'Post created: ' + this.name
-    : "The post doesn't have a name";
-  console.log(message);
-};
-//Making a model of that schema
-const Post = mongoose.model('Post', postSchema);
+const Channel = require('./models/channel');
+const Post = require('./models/post');
 
 //Creating a http server
 const http = require('http').Server(app);
@@ -72,7 +42,7 @@ app.get('/home', (req, res) => {
   Channel.find((err, data) => {
     if (err) return console.error(err);
     channels = data;
-    console.log(data)
+    console.log(data);
     res.render('home', { channels });
   });
 });
