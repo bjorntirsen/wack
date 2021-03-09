@@ -7,9 +7,13 @@ const channelSchema = new mongoose.Schema({
     minLength: 1,
     maxLength: 100,
   },
+  by: {
+    type: Schema.Types.ObjectId,
+    ref: 'by',
+    required: true,
+  },
   description: {
     type: String,
-    minLength: 1,
     maxLength: 200,
   },
   private: {
@@ -17,7 +21,7 @@ const channelSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  posts: [],
+  posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
 });
 
 module.exports = mongoose.model('Channel', channelSchema);

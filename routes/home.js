@@ -12,7 +12,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/channels/create', ensureAuthenticated, (req, res) => {
-  res.render('ch_create.ejs', { cssdir: '../' });
+  res.render('ch_create.ejs', { cssdir: '/', user: req.user });
 });
 
 router.post('/channels/create', ensureAuthenticated, (req, res) => {
@@ -44,10 +44,14 @@ router.get('/channels/:id', ensureAuthenticated, async (req, res) => {
   });
   let channel = {};
   await Channel.findOne({ _id: req.params.id }, (err, data) => {
-    if (err) return console.error(err);
+    if (err) {
+      //return console.error(err)
+      req.flash('error_msg', 'The requested channel does not exist.');
+      res.redirect('/home/channels');
+    };
     channel = data;
   });
-  res.render('channel', { channel, channels, cssdir: '/' });
+  res.render('channel', { channel, channels, cssdir: '/', user: req.user });
 });
 
 router.post('/channels/:id', ensureAuthenticated, (req, res) => {

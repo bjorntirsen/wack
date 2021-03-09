@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
   by: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'by',
     required: true,
-    minLength: 1,
-    maxLength: 100,
   },
   content: {
     type: String,
