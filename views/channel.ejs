@@ -22,7 +22,7 @@ include('blocks/navbar') -%>
         <% if (channel.posts.length > 0) { %> <% channel.posts.forEach(post => { %>
         <li class="channel__li">
           <h4><%= post.by %></h4>
-          <span><%= post.timestamp %></span>
+          <span><%= post.date %></span>
           <p><%= post.content %></p>
         </li>
         <% }) %> <% } %>
