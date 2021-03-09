@@ -1,5 +1,3 @@
-<%- include('blocks/head', { title: 'Wack - home' }) -%> <%-
-include('blocks/navbar') -%>
 <section class="">
   <div class="container main__container row">
     <div class="col__sidebar">
@@ -11,7 +9,7 @@ include('blocks/navbar') -%>
         </li>
         <% }) %>
         <li class="channel__li">
-          <a href="/channels/create">Create channel</a>
+          <a href="/home/channels/create">Create channel</a>
         </li>
       </ul>
     </div>
@@ -49,4 +47,3 @@ include('blocks/navbar') -%>
 <script src="../socket.io/socket.io.js"></script>
 <script src="../public/scripts/script.js"></script>
 <script src="../public/scripts/channel.js"></script>
-<%- include('blocks/bottom') -%>

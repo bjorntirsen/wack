@@ -5,11 +5,11 @@
       <ul id="channels">
         <% channels.forEach(channel => { %>
         <li class="channel__li">
-          <a href="channels/<%= channel.id %>">#<%= channel.name %></a>
+          <a href="home/channels/<%= channel.id %>">#<%= channel.name %></a>
         </li>
         <% }) %>
         <li class="channel__li">
-          <a href="/channels/create">Create channel</a>
+          <a href="home/channels/create">Create channel</a>
         </li>
       </ul>
     </div>

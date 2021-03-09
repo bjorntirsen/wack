@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Channel = require('../models/channel');
+const Post = require('../models/post');
 const { ensureAuthenticated } = require('../config/auth.js');
 
 router.get('/', ensureAuthenticated, (req, res) => {
@@ -10,11 +11,11 @@ router.get('/', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get('/channels/create', (req, res) => {
+router.get('/channels/create', ensureAuthenticated, (req, res) => {
   res.render('ch_create.ejs', { cssdir: '../' });
 });
 
-router.post('/channels/create', (req, res) => {
+router.post('/channels/create', ensureAuthenticated, (req, res) => {
   const channel = new Channel({
     name: req.body.name,
     description: req.body.description || '',
@@ -27,7 +28,7 @@ router.post('/channels/create', (req, res) => {
   });
 });
 
-router.get('/delete/:id', (req, res) => {
+router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
   Channel.deleteOne({ _id: req.params.id }, (err, data) => {
     if (err) return console.error(err);
     console.log(req.params.id + 'deleted');
@@ -35,7 +36,7 @@ router.get('/delete/:id', (req, res) => {
   });
 });
 
-router.get('/channels/:id', async (req, res) => {
+router.get('/channels/:id', ensureAuthenticated, async (req, res) => {
   let channels = [];
   await Channel.find((err, data) => {
     if (err) return console.error(err);
@@ -46,10 +47,10 @@ router.get('/channels/:id', async (req, res) => {
     if (err) return console.error(err);
     channel = data;
   });
-  res.render('channel', { channel, channels, cssdir: '../' });
+  res.render('channel', { channel, channels, cssdir: '/' });
 });
 
-router.post('/channels/:id', (req, res) => {
+router.post('/channels/:id', ensureAuthenticated, (req, res) => {
   const post = new Post({
     by: req.body.user,
     content: req.body.content,
