@@ -12,6 +12,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/channels/create', ensureAuthenticated, (req, res) => {
+  console.log(req.user)
   res.render('ch_create.ejs', { cssdir: '/', user: req.user });
 });
 
