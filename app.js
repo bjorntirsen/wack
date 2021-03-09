@@ -6,6 +6,7 @@ const expressEjsLayout = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+require("./config/passport")(passport)
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
@@ -21,6 +22,7 @@ db.once('open', () => {
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const homeRouter = require('./routes/home');
 
 app.set('view engine', 'ejs');
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -38,11 +40,14 @@ app.use(passport.session());
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
   next();
 });
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/home', homeRouter);
 
 io.on('connection', (socket) => {
   console.log('a user connected');
