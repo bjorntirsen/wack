@@ -1,0 +1,40 @@
+<% if (typeof title==='undefined' ) { title='Wack' } %>
+<% if (typeof cssdir==='undefined' ) { cssdir='' } %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="<%= cssdir %>public/styles/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container nav__container">
+        <div class="logo__wrapper">
+          <span class="logo">wack</span>
+        </div>
+        <nav>
+          <ul class="nav__list nav__list--primary">
+            <li class="nav__item"><a class="nav__link" href="/">home</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">about</a></li>
+            <li class="nav__item"><a class="nav__link" href="#">contact</a></li>
+          </ul>
+          <ul class="nav__list">
+            <li class="nav__item"><a class="nav__link" href="/signin">sign in</a></li>
+            <li class="nav__item">
+              <a class="nav__link btn nav__btn" href="/signup">sign up</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <%- body %>
+  </body>
+</html>

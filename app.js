@@ -1,8 +1,11 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-
 const mongoose = require('mongoose');
+const expressEjsLayout = require('express-ejs-layouts');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 mongoose.connect('mongodb://localhost:27017/wack', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -16,21 +19,10 @@ db.once('open', () => {
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
 
-const Channel = require('./models/channel');
-const Post = require('./models/post');
-
-//Creating a http server
-const http = require('http').Server(app);
-//Setting up Socket.IO with the server
-const io = require('socket.io')(http);
-
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 app.use('/public', express.static(path.join(__dirname, 'public')));
-
 app.use(express.urlencoded({ extended: true }));
-
+app.use(expressEjsLayout);
 app.use('/', indexRouter);
 app.use('/user', userRouter);
 
