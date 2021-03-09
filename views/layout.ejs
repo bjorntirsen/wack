@@ -23,14 +23,24 @@
         <nav>
           <ul class="nav__list nav__list--primary">
             <li class="nav__item"><a class="nav__link" href="/">home</a></li>
+            
             <li class="nav__item"><a class="nav__link" href="#">about</a></li>
             <li class="nav__item"><a class="nav__link" href="#">contact</a></li>
           </ul>
           <ul class="nav__list">
+            <% if (typeof user != 'undefined' ) { %>
+              <li class="nav__item">
+                <span>Logged in as: <%= user.name %></span>
+              </li>
+              <li class="nav__item">
+                <a class="nav__link btn nav__btn" href="users/signout">sign out</a>
+              </li>
+            <% } else { %>
             <li class="nav__item"><a class="nav__link" href="/signin">sign in</a></li>
             <li class="nav__item">
               <a class="nav__link btn nav__btn" href="/signup">sign up</a>
             </li>
+            <% } %>
           </ul>
         </nav>
       </div>
