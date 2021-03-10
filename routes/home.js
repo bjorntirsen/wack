@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Channel = require('../models/channel');
+const User = require('../models/user');
 const Post = require('../models/post');
 const { ensureAuthenticated } = require('../config/auth.js');
 
@@ -12,21 +13,23 @@ router.get('/', ensureAuthenticated, (req, res) => {
 });
 
 router.get('/channels/create', ensureAuthenticated, (req, res) => {
-  console.log(req.user)
   res.render('ch_create.ejs', { cssdir: '/', user: req.user });
 });
 
 router.post('/channels/create', ensureAuthenticated, (req, res) => {
-  const channel = new Channel({
-    name: req.body.name,
-    description: req.body.description || '',
-    private: req.body.private ? true : false,
-  });
-  channel.save((err) => {
-    if (err) return console.error(err);
-    console.log('Channel created.');
-    res.redirect('/home');
-  });
+  User.findOne({email: req.body.userEmail }).exec((err, user) => {
+    const channel = new Channel({
+      by: user,
+      name: req.body.name,
+      description: req.body.description || '',
+      private: req.body.private ? true : false,
+    });
+    channel.save((err) => {
+      if (err) return console.error(err);
+      console.log('The following channel was created:' + channel);
+      res.redirect('/home');
+    });
+  })
 });
 
 router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
@@ -37,37 +40,53 @@ router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get('/channels/:id', ensureAuthenticated, async (req, res) => {
-  let channels = [];
-  await Channel.find((err, data) => {
+router.get('/channels/:id', ensureAuthenticated, (req, res) => {
+  //let channels = [];
+  Channel.find((err, data) => {
     if (err) return console.error(err);
     channels = data;
   });
-  let channel = {};
-  await Channel.findOne({ _id: req.params.id }, (err, data) => {
+  //let channel = {};
+  Channel.findOne({ _id: req.params.id })
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'by',
+        model: 'User'
+      }
+    })
+    .exec((err, channel) => {
     if (err) {
-      //return console.error(err)
+      console.log(err)
       req.flash('error_msg', 'The requested channel does not exist.');
-      res.redirect('/home/channels');
+      res.redirect('/home/');
+    } else {
+      
+      console.log(channel)
+      console.log(channel.posts[0])
+      res.render('channel', { channel, channels, cssdir: '/', user: req.user });
     };
-    channel = data;
   });
-  res.render('channel', { channel, channels, cssdir: '/', user: req.user });
 });
 
 router.post('/channels/:id', ensureAuthenticated, (req, res) => {
-  const post = new Post({
-    by: req.body.user,
-    content: req.body.content,
-  });
-  Channel.updateOne(
-    { _id: req.params.id },
-    { $push: { posts: post } },
-    (err) => {
-      if (err) return console.error(err);
-      res.redirect(`/channels/${req.params.id}`);
-    }
-  );
+  User.findOne({email: req.body.userEmail }).exec((err, user) => {
+    if (err) return console.error(err);
+    const post = new Post({
+      by: user,
+      content: req.body.content,
+    });
+    post.save();
+    Channel.updateOne(
+      { _id: req.params.id },
+      { $push: { posts: post } },
+      (err) => {
+        if (err) return console.error(err);
+        console.log('The following post was created:' + post);
+        res.redirect(`${req.params.id}`);
+      }
+    );
+  })
 });
 
 module.exports = router;

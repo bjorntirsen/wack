@@ -22,7 +22,7 @@ const channelSchema = new Schema({
     required: true,
     default: false,
   },
-  posts: [{ type: Schema.Types.ObjectId, ref: 'post' }],
+  posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
 });
 
 module.exports = mongoose.model('Channel', channelSchema);

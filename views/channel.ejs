@@ -18,13 +18,15 @@
       <h2><%= channel.name %></h2>
       <h3 class="col__header">Posts in channel</h3>
       <ul id="posts">
-        <% if (channel.posts.length > 0) { %> <% channel.posts.forEach(post => { %>
-        <li class="channel__li">
-          <h4><%= post.by %></h4>
-          <span><%= post.date %></span>
-          <p><%= post.content %></p>
-        </li>
-        <% }) %> <% } %>
+        <% if (channel.posts.length > 0) { %>
+          <% channel.posts.forEach(post => { %>
+            <li class="channel__li">
+              <h4><%= post.by.name %></h4>
+              <span><%= post.date %></span>
+              <p><%= post.content %></p>
+            </li>
+          <% }) %>
+        <% } %>
       </ul>
     </div>
     <div class="col__users">
@@ -37,10 +39,10 @@
   <div class="container main__container row">
     <form id="form2" class="form" method="post" action="../channels/<%= channel.id %>" autocomplete="off">
       <div class="f-grow-1">
-        <input id="by" class="w-100" name="user" autocomplete="off" placeholder="User name" /><br>
-        <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" /></textarea>
+        <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
+        <input type="hidden" id="userEmail" name="userEmail" value="<%= user.email %>">
       </div>
-      <input id="submit" class="btn btn__post" type="submit" value="Post" disabled />
+      <input id="submit" class="btn btn__post" type="submit" value="Post" />
     </form>
   </div>
 </section>

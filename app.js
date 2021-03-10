@@ -6,7 +6,7 @@ const expressEjsLayout = require('express-ejs-layouts');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
-require("./config/passport")(passport)
+require('./config/passport')(passport);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
@@ -30,9 +30,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(expressEjsLayout);
 app.use(
   session({
-    secret: 'secret',
+    secret: 'blablabla',
     resave: true,
     saveUninitialized: true,
+    cookie: { expires: new Date(Date.now() + 30 * 86400 * 1000) },
   })
 );
 app.use(passport.initialize());
