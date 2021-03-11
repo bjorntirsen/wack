@@ -1,4 +1,6 @@
 const socket = io();
+const userId = document.getElementById('userId').value;
+const userName = document.getElementById('userName').value;
 
 const form = document.getElementById('form');
 if (form != null) {
@@ -21,15 +23,22 @@ socket.on('chat message', (msg) => {
 });
 
 socket.on('connection', () => {
-  const item = document.createElement('li');
-  item.textContent = 'User connected';
-  users.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+  socket.emit('userStatusChange', userId);
+  socket.emit('newUser', userName);
 });
 
-socket.on('disconnected', () => {
+socket.on('newUser', (newUserName) => {
+  if (newUserName != userName) {
+    const item = document.createElement('li');
+    item.textContent = `${newUserName} connected`;
+    users.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+});
+
+socket.on('disconnected', (userOffline) => {
   const item = document.createElement('li');
-  item.textContent = 'User disconnected';
+  item.textContent = `${userOffline} disconnected`;
   users.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });

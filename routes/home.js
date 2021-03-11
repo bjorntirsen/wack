@@ -46,12 +46,10 @@ router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
 
 //Get & post to channel id
 router.get('/channels/:id', ensureAuthenticated, (req, res) => {
-  //let channels = [];
   Channel.find((err, data) => {
     if (err) return console.error(err);
     channels = data;
   });
-  //let channel = {};
   Channel.findOne({ _id: req.params.id })
     .populate({
       path: 'posts',

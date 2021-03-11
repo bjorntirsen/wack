@@ -50,12 +50,31 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/home', homeRouter);
 
+//Keep track of online users
+const onlineUsers = {};
+io.use((socket, next) => {
+  const channelURL = socket.handshake.headers.referer;
+  const channelID = channelURL.split('/').slice(-1)[0];
+  socket.on('userStatusChange', (userId) => {
+    onlineUsers[socket.id] = { userId, channelID };
+    console.log('online users:');
+    console.log(onlineUsers);
+  });
+  next();
+});
+
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  socket.on('newUser', (userName) => {
+    console.log(`${userName} connected`);
+    io.emit('newUser', userName);
+  })
   io.emit('connection');
   socket.on('disconnect', () => {
-    console.log('user disconnected');
-    io.emit('disconnected');
+    console.log('a user disconnected');
+    const userOffline = onlineUsers[socket.id].userId
+    io.emit('disconnected', userOffline);
+    delete onlineUsers[socket.id];
+    console.log(onlineUsers);
   });
 });
 
