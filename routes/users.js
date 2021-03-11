@@ -30,7 +30,7 @@ router.post('/register', (req, res) => {
       password2: password2,
     });
   } else {
-    //validation passed
+    //Validation passed
     User.findOne({ email: email }).exec((err, user) => {
       console.log(user);
       if (user) {
