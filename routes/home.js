@@ -5,6 +5,9 @@ const User = require('../models/user');
 const Post = require('../models/post');
 const { ensureAuthenticated } = require('../config/auth.js');
 
+const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+//'Home'
 router.get('/', ensureAuthenticated, (req, res) => {
   Channel.find((err, data) => {
     if (err) return console.error(err);
@@ -12,6 +15,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
   });
 });
 
+//Get, post & delete to 'create channel'
 router.get('/channels/create', ensureAuthenticated, (req, res) => {
   res.render('ch_create.ejs', { cssdir: '/', user: req.user });
 });
@@ -40,6 +44,7 @@ router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
   });
 });
 
+//Get & post to channel id
 router.get('/channels/:id', ensureAuthenticated, (req, res) => {
   //let channels = [];
   Channel.find((err, data) => {
@@ -61,10 +66,7 @@ router.get('/channels/:id', ensureAuthenticated, (req, res) => {
       req.flash('error_msg', 'The requested channel does not exist.');
       res.redirect('/home/');
     } else {
-      
-      console.log(channel)
-      console.log(channel.posts[0])
-      res.render('channel', { channel, channels, cssdir: '/', user: req.user });
+      res.render('channel', { channel, channels, cssdir: '/', user: req.user, date_options: date_options });
     };
   });
 });
@@ -76,13 +78,15 @@ router.post('/channels/:id', ensureAuthenticated, (req, res) => {
       by: user,
       content: req.body.content,
     });
-    post.save();
+    post.save((err) => {
+      if (err) return console.error(err);
+      console.log('The following post was created:' + post);
+    });
     Channel.updateOne(
       { _id: req.params.id },
       { $push: { posts: post } },
-      (err) => {
+      (err, data) => {
         if (err) return console.error(err);
-        console.log('The following post was created:' + post);
         res.redirect(`${req.params.id}`);
       }
     );

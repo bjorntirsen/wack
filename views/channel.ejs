@@ -21,8 +21,11 @@
         <% if (channel.posts.length > 0) { %>
           <% channel.posts.forEach(post => { %>
             <li class="channel__li">
-              <h4><%= post.by.name %></h4>
-              <span><%= post.date %></span>
+              <span>By <%= post.by.name %></>
+              <% let formatted_date = post.date.toLocaleDateString('en-gb', date_options) %>
+              <% let hours = post.date.getHours() %>
+              <% let minutes = post.date.getMinutes() %>
+              <span> on <%= formatted_date %> at <%= hours %>:<%= minutes %>:</span>
               <p><%= post.content %></p>
             </li>
           <% }) %>

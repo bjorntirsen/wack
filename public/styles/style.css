@@ -125,6 +125,14 @@ header {
   list-style-type: none;
 }
 
+#channels > .channel__li {
+  font-size: 1rem;
+}
+
+#posts > .channel__li {
+  font-size: 0.8rem;
+}
+
 #channels {
   padding: 0;
   font-size: 1rem;

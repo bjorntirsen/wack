@@ -6,6 +6,7 @@ const passport = require('passport');
 
 router.use(express.urlencoded({ extended: true }));
 
+//Handle register, signin & signout
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
@@ -32,7 +33,7 @@ router.post('/register', (req, res) => {
   } else {
     //Validation passed
     User.findOne({ email: email }).exec((err, user) => {
-      console.log(user);
+      console.log('The following user was created:' + user);
       if (user) {
         errors.push({ msg: 'Email already registered.' });
         res.render('signup', {
