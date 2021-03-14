@@ -22,6 +22,7 @@ const channelSchema = new Schema({
     required: true,
     default: false,
   },
+  members: [{ type: Schema.Types.ObjectId, ref: 'Member' }],
   posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
 });
 
