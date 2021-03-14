@@ -77,6 +77,10 @@ io.on('connection', (socket) => {
     io.emit('usersStatusUpdate', onlineUsers);
   });
 
+  socket.on('startPM', (PMuserId) => {
+    console.log(PMuserId);
+  });
+
   socket.on('disconnect', () => {
     console.log('a user disconnected');
     onlineUsers.splice(
