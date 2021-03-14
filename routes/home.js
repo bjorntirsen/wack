@@ -21,7 +21,7 @@ router.get('/channels/create', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/channels/create', ensureAuthenticated, (req, res) => {
-  User.findOne({email: req.body.userEmail }).exec((err, user) => {
+  User.findOne({ email: req.body.userEmail }).exec((err, user) => {
     const channel = new Channel({
       by: user,
       name: req.body.name,
@@ -33,7 +33,7 @@ router.post('/channels/create', ensureAuthenticated, (req, res) => {
       console.log('The following channel was created:' + channel);
       res.redirect('/home');
     });
-  })
+  });
 });
 
 router.get('/channels/delete/:id', ensureAuthenticated, (req, res) => {
@@ -55,22 +55,28 @@ router.get('/channels/:id', ensureAuthenticated, (req, res) => {
       path: 'posts',
       populate: {
         path: 'by',
-        model: 'User'
-      }
+        model: 'User',
+      },
     })
     .exec((err, channel) => {
-    if (err) {
-      console.log(err)
-      req.flash('error_msg', 'The requested channel does not exist.');
-      res.redirect('/home/');
-    } else {
-      res.render('channel', { channel, channels, cssdir: '/', user: req.user, date_options: date_options });
-    };
-  });
+      if (err) {
+        console.log(err);
+        req.flash('error_msg', 'The requested channel does not exist.');
+        res.redirect('/home/');
+      } else {
+        res.render('channel', {
+          channel,
+          channels,
+          cssdir: '/',
+          user: req.user,
+          date_options: date_options,
+        });
+      }
+    });
 });
 
 router.post('/channels/:id', ensureAuthenticated, (req, res) => {
-  User.findOne({email: req.body.userEmail }).exec((err, user) => {
+  User.findOne({ email: req.body.userEmail }).exec((err, user) => {
     if (err) return console.error(err);
     const post = new Post({
       by: user,
@@ -88,7 +94,7 @@ router.post('/channels/:id', ensureAuthenticated, (req, res) => {
         res.redirect(`${req.params.id}`);
       }
     );
-  })
+  });
 });
 
 module.exports = router;
