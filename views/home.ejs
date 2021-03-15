@@ -13,22 +13,22 @@
         </li>
       </ul>
     </div>
-    <div class="col__posts">
-      <h3 class="col__header">Posts in channel</h3>
-      <ul id="posts"></ul>
-    </div>
     <div class="col__users">
       <h3 class="col__header">Users Online</h3>
       <ul id="users"></ul>
     </div>
   </div>
-</section>
-<section class="third-section">
-  <div class="container main__container row">
-    <form id="form" autocomplete="off">
-      <input id="input" autocomplete="off" />
-      <button>Post</button>
-    </form>
+  <div class="col__users">
+    <h3 class="col__header">Users Offline</h3>
+    <ul id="offlineUsers">
+      <% if (users.length > 0) { %>
+        <% users.forEach(item => { %>
+          <% if (item._id !== user._id) { %>
+            <a href="channels/startPM/<%= user.userId %>" class="user__li"><%= item.name %></>
+          <% } %>
+        <% }) %>
+      <% } %>
+    </ul>
   </div>
 </section>
 <!-- ----------JAVASCRIPT---------- -->

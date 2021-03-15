@@ -22,7 +22,7 @@ db.once('open', () => {
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const homeRouter = require('./routes/home');
+const channelsRouter = require('./routes/channels');
 
 app.set('view engine', 'ejs');
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -48,7 +48,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/home', homeRouter);
+app.use('/channels', channelsRouter);
 
 //Keep track of online users
 function pushToArray(arr, obj) {
@@ -71,9 +71,9 @@ io.on('connection', (socket) => {
       channelName,
     };
     pushToArray(onlineUsers, changedUser);
-    console.log(`${userName} entered ${channelName}`);
+    /* console.log(`${userName} entered ${channelName}`);
     console.log('online users:');
-    console.log(onlineUsers);
+    console.log(onlineUsers); */
     io.emit('usersStatusUpdate', onlineUsers);
   });
 
@@ -87,8 +87,8 @@ io.on('connection', (socket) => {
       onlineUsers.findIndex(({ id }) => id === socket.id),
       1
     );
-    console.log('online users:');
-    console.log(onlineUsers);
+    /* console.log('online users:');
+    console.log(onlineUsers); */
     socket.broadcast.emit('usersStatusUpdate', onlineUsers);
   });
 });

@@ -10,15 +10,15 @@ socket.on('usersStatusUpdate', (onlineUsers) => {
   console.log(onlineUsers);
   users.textContent = '';
   onlineUsers.forEach((user) => {
-    const item = document.createElement('li');
-    item.textContent = `${user.userName}`;
-    if (user.userName === userName) item.textContent += '(me)';
-    else {
+    if (user.userName !== userName) {
+      const item = document.createElement('a');
+      item.textContent = `${user.userName}`;
+      item.href = `channels/startPM/${user.userId}`
       item.className += 'btn';
       item.addEventListener('click', (e) => {
         socket.emit('startPM', user.userId);
       });
+      users.appendChild(item);
     }
-    users.appendChild(item);
   });
 });

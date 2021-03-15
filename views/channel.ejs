@@ -14,6 +14,22 @@
         </li>
       </ul>
     </div>
+    <div class="col__users">
+      <h3 class="col__header">Users Online</h3>
+      <ul id="users"></ul>
+    </div>
+    <div class="col__users">
+      <h3 class="col__header">Users Offline</h3>
+      <ul id="offlineUsers">
+        <% if (users.length > 0) { %>
+          <% users.forEach(user => { %>
+            <a href="channels/startPM/<%= user.userId %>" class="user__li">
+              <%= user.name %>
+            </>
+          <% }) %>
+        <% } %>
+      </ul>
+    </div>
     <div class="col__posts">
       <h2><%= channel.name %></h2>
       <h3 class="col__header">Posts in channel</h3>
@@ -31,10 +47,6 @@
           <% }) %>
         <% } %>
       </ul>
-    </div>
-    <div class="col__users">
-      <h3 class="col__header">Users Online</h3>
-      <ul id="users"></ul>
     </div>
   </div>
 </section>

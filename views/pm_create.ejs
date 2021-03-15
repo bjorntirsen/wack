@@ -1,0 +1,38 @@
+<%- include ('./partials/messages') %>
+<section class="second-section container">
+  <div class="card">
+    <form method="post" action="./<%= PMreciever %>">
+      <h1>Start private chat</h1>
+      <p class="text-muted">
+        Send a message to start a private chat:
+      </p>
+      <div class="mb-1 f-grow-1">
+        <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
+      </div>
+      <p>Add PMreciever</p>
+      <input class="" type="checkbox" name="private" checked hidden/>
+      <input
+        type="hidden"
+        id="userEmail"
+        name="userEmail"
+        value="<%= user.email %>"
+      />
+      <input
+        type="hidden"
+        id="PMreciever"
+        name="PMreciever"
+        value="<%= PMreciever %>"
+      />
+      <div class="d-flex">
+        <input class="btn btn__medium" type="submit" value="Start chat" />
+      </div>
+    </form>
+  </div>
+  <div class="col__users">
+    <h3 class="col__header">Users Online</h3>
+    <ul id="users"></ul>
+  </div>
+</section>
+<!-- ----------JAVASCRIPT---------- -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="<%= cssdir %>public/scripts/script.js"></script>
