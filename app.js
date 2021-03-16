@@ -62,20 +62,18 @@ function getChannelName(socketReferer) {
 let onlineUsers = [];
 
 io.on('connection', (socket) => {
-  socket.on('userStatusChange', (userId, userName) => {
+  socket.on('userDataFromClient', (userId, userName) => {
     const channelName = getChannelName(socket.handshake.headers.referer);
     const changedUser = {
-      id: socket.id,
+      socketId: socket.id,
       userName,
       userId,
       channelName,
     };
-    pushToArray(onlineUsers, changedUser);
-    /* console.log(`${userName} entered ${channelName}`);
-    console.log('online users:');
-    console.log(onlineUsers); */
-    io.emit('usersStatusUpdate', onlineUsers);
-  });
+    onlineUsers.push(changedUser);
+    console.log(onlineUsers)
+    io.emit('onlineUsersFromServer', onlineUsers);
+  })
 
   socket.on('startPM', (PMuserId) => {
     console.log(PMuserId);
@@ -87,9 +85,7 @@ io.on('connection', (socket) => {
       onlineUsers.findIndex(({ id }) => id === socket.id),
       1
     );
-    /* console.log('online users:');
-    console.log(onlineUsers); */
-    socket.broadcast.emit('usersStatusUpdate', onlineUsers);
+    socket.broadcast.emit('onlineUsersFromServer', onlineUsers);
   });
 });
 

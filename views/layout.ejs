@@ -29,7 +29,7 @@
           </ul>
           <ul class="nav__list">
             <% if (typeof user != 'undefined' ) { %>
-              <input type="text" hidden id="userId" value="<%= user.email %>">
+              <input type="text" hidden id="userId" value="<%= user._id %>">
               <input type="text" hidden id="userName" value="<%= user.name %>">
               <li class="nav__item">
                 <span>Logged in as: <%= user.name %></span>

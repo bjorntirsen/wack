@@ -1,24 +1,31 @@
-const socket = io();
 const userId = document.getElementById('userId').value;
 const userName = document.getElementById('userName').value;
+const socket = io();
 
-socket.emit('userStatusChange', userId, userName, (error) => {
+socket.emit('userDataFromClient', userId, userName, (error) => {
   if (error) console.log(error);
 });
 
-socket.on('usersStatusUpdate', (onlineUsers) => {
-  console.log(onlineUsers);
-  users.textContent = '';
+function updateWhoIsOnline(onlineUsers) {
+  usersOnlineUl.textContent = '';
   onlineUsers.forEach((user) => {
-    if (user.userName !== userName) {
+    if (user.userId !== userId) {
       const item = document.createElement('a');
       item.textContent = `${user.userName}`;
-      item.href = `channels/startPM/${user.userId}`
+      item.href = `channels/startPM/${user.userId}`;
+      item.id = user.userId + 'online';
       item.className += 'btn';
       item.addEventListener('click', (e) => {
         socket.emit('startPM', user.userId);
       });
-      users.appendChild(item);
+      usersOnlineUl.appendChild(item);
+      const onlineUser = document.getElementById(user.userId);
+      //console.log('onlineUSer' +onlineUser);
+      offlineUsers.removeChild(onlineUser);
     }
   });
+};
+
+socket.on('onlineUsersFromServer', (onlineUsers) => {
+  updateWhoIsOnline(onlineUsers);
 });

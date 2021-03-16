@@ -14,15 +14,15 @@
   </div>
   <div class="sidebar__usersOnline">
     <h3 class="col__header">Users Online</h3>
-    <ul id="onlineUsers"></ul>
+    <ul id="usersOnlineUl"></ul>
   </div>
   <div class="sidebar__usersOffline">
     <h3 class="col__header">Users Offline</h3>
     <ul id="offlineUsers">
       <% if (users.length > 0) { %>
         <% users.forEach(user => { %>
-          <li>
-            <a href="channels/startPM/<%= user.userId %>" class="user__li"><%= user.name %></a>
+          <li id="<%= user._id %>">
+            <a href="channels/startPM/<%= user._id %>" class="user__li"><%= user.name %></a>
           </li>
         <% }) %>
       <% } %>

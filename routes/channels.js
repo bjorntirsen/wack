@@ -9,14 +9,17 @@ const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 
 //'Home'
 router.get('/', ensureAuthenticated, (req, res) => {
-  console.log(req.user)
   Channel.find((err, channels) => {
     if (err) return console.error(err);
-    User.find({ _id: {$ne: req.user._id}}, (err, users) => {
+    User.find({ _id: { $ne: req.user._id } }, (err, users) => {
       if (err) return console.error(err);
-      res.render('channels', { channels: channels, user: req.user, users: users });
-    })
-    
+      //console.log(users);
+      res.render('channels', {
+        channels: channels,
+        user: req.user,
+        users: users,
+      });
+    });
   });
 });
 
@@ -153,16 +156,24 @@ router.get('/startPM/:PMrecieverEmail', (req, res) => {
   //TODO check if channel exists aleady
   Channel.findOne({ private: true }).exec((err, user) => {
     if (err) return console.error(err);
-    res.render('pm_create', { cssdir: '/', user: req.user, PMreciever: req.params.PMrecieverEmail });
+    res.render('pm_create', {
+      cssdir: '/',
+      user: req.user,
+      PMreciever: req.params.PMrecieverEmail,
+    });
   });
 });
 
 router.post('/startPM/:PMrecieverEmail', (req, res) => {
   //TODO check if channel exists aleady
   console.log('inside startPM POST route');
-  console.log(req.user)
+  console.log(req.user);
   console.log(req.params.PMrecieverEmail);
-  res.render('pm_create', { cssdir: '/', user: req.user, PMreciever: req.params.PMrecieverEmail });
+  res.render('pm_create', {
+    cssdir: '/',
+    user: req.user,
+    PMreciever: req.params.PMrecieverEmail,
+  });
 });
 
 module.exports = router;
