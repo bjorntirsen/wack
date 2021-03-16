@@ -1,35 +1,37 @@
-<%- include ('./partials/messages') %>
-<section class="">
-  <div class="container main__container row">
-    <div class="col__sidebar">
-      <h3 class="">Channels</h3>
-      <ul id="channels">
-        <% channels.forEach(channel => { %>
+<div class="sidebar">
+  <div class="sidebar__channels">
+    <h3 class="">Channels</h3>
+    <ul id="channels">
+      <% channels.forEach(channel => { %>
         <li class="channel__li">
           <a href="../channels/<%= channel.id %>">#<%= channel.name %></a>
         </li>
+      <% }) %>
+      <li class="channel__li">
+        <a href="/home/channels/create">Create channel</a>
+      </li>
+    </ul>
+  </div>
+  <div class="sidebar__usersOnline">
+    <h3 class="col__header">Users Online</h3>
+    <ul id="onlineUsers"></ul>
+  </div>
+  <div class="sidebar__usersOffline">
+    <h3 class="col__header">Users Offline</h3>
+    <ul id="offlineUsers">
+      <% if (users.length > 0) { %>
+        <% users.forEach(user => { %>
+          <li>
+            <a href="channels/startPM/<%= user.userId %>" class="user__li"><%= user.name %></a>
+          </li>
         <% }) %>
-        <li class="channel__li">
-          <a href="/home/channels/create">Create channel</a>
-        </li>
-      </ul>
-    </div>
-    <div class="col__users">
-      <h3 class="col__header">Users Online</h3>
-      <ul id="users"></ul>
-    </div>
-    <div class="col__users">
-      <h3 class="col__header">Users Offline</h3>
-      <ul id="offlineUsers">
-        <% if (users.length > 0) { %>
-          <% users.forEach(user => { %>
-            <a href="channels/startPM/<%= user.userId %>" class="user__li">
-              <%= user.name %>
-            </>
-          <% }) %>
-        <% } %>
-      </ul>
-    </div>
+      <% } %>
+    </ul>
+  </div>
+</div>
+<%- include ('./partials/messages') %>
+<% if (typeof channel!=='undefined') { %>
+  <section class="container main__container row">
     <div class="col__posts">
       <h2><%= channel.name %></h2>
       <h3 class="col__header">Posts in channel</h3>
@@ -48,10 +50,8 @@
         <% } %>
       </ul>
     </div>
-  </div>
-</section>
-<section >
-  <div class="container main__container row">
+  </section>
+  <section class="container input__container">
     <form id="form2" class="form" method="post" action="../channels/<%= channel.id %>" autocomplete="off">
       <div class="f-grow-1">
         <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
@@ -59,8 +59,12 @@
       </div>
       <input id="submit" class="btn btn__post" type="submit" value="Post" />
     </form>
-  </div>
-</section>
+  </section>
+<% } else { %>
+  <section class="container main__container row">
+    <h1>Welcome <%= user.name %></h1>
+  </section>
+<% } %>
 <!-- ----------JAVASCRIPT---------- -->
 <script src="../socket.io/socket.io.js"></script>
 <script src="../public/scripts/script.js"></script>

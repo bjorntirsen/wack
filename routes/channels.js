@@ -9,12 +9,12 @@ const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 
 //'Home'
 router.get('/', ensureAuthenticated, (req, res) => {
-  console.log(req.user._id)
+  console.log(req.user)
   Channel.find((err, channels) => {
     if (err) return console.error(err);
     User.find({ _id: {$ne: req.user._id}}, (err, users) => {
       if (err) return console.error(err);
-      res.render('home.ejs', { channels: channels, user: req.user, users: users });
+      res.render('channels', { channels: channels, user: req.user, users: users });
     })
     
   });
@@ -36,7 +36,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
     channel.save((err) => {
       if (err) return console.error(err);
       console.log('The following channel was created:' + channel);
-      res.redirect('/home');
+      res.redirect('/');
     });
   });
 });
@@ -67,9 +67,9 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
       if (err) {
         console.log(err);
         req.flash('error_msg', 'The requested channel does not exist.');
-        res.redirect('/home/');
+        res.redirect('/');
       } else {
-        res.render('channel', {
+        res.render('channels', {
           channel,
           channels,
           cssdir: '/',
