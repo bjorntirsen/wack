@@ -18,7 +18,7 @@
       <% if (users.length > 0) { %>
         <% users.forEach(user => { %>
           <li id="<%= user._id %>">
-            <a href="channels/startPM/<%= user._id %>" class="user__li"><%= user.name %></a>
+            <a href="channels/startDM/<%= user._id %>" class="user__li"><%= user.name %></a>
           </li>
         <% }) %>
       <% } %>

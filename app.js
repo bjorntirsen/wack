@@ -81,12 +81,16 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('a user disconnected');
-    const diconnectedUser = onlineUsers.filter(user => user.socketId === socket.id);
-    socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
-    onlineUsers.splice(
-      onlineUsers.findIndex(({ id }) => id === socket.id),
-      1
+    const diconnectedUser = onlineUsers.filter(
+      (user) => user.socketId === socket.id
     );
+    if (typeof diconnectedUser === Array) {
+      socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
+      onlineUsers.splice(
+        onlineUsers.findIndex(({ id }) => id === socket.id),
+        1
+      );
+    }
   });
 });
 

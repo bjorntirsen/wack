@@ -2,11 +2,7 @@ const userId = document.getElementById('userId').value;
 const userName = document.getElementById('userName').value;
 const socket = io();
 
-socket.emit('userDataFromClient', userId, userName, (error) => {
-  if (error) console.log(error);
-});
-
-function renderUserStatus(onlineUsers) {
+function renderOnlineUserStatus(onlineUsers) {
   onlineUsers.forEach((user) => {
     let onlineId = user.userId + 'online';
     if (document.getElementById(onlineId) === null) {
@@ -22,13 +18,20 @@ function renderUserStatus(onlineUsers) {
   });
 }
 
+function removeOnlineStatusFrom(diconnectedUserId) {
+  const onlineSpan = document.getElementById(diconnectedUserId + 'online');
+  console.log(onlineSpan);
+  onlineSpan.remove();
+}
+
+socket.emit('userDataFromClient', userId, userName, (error) => {
+  if (error) console.log(error);
+});
+
 socket.on('onlineUsersFromServer', (onlineUsers) => {
-  renderUserStatus(onlineUsers);
+  renderOnlineUserStatus(onlineUsers);
 });
 
 socket.on('userOffline', (diconnectedUserId) => {
-  console.log(diconnectedUserId)
-  const onlineSpan = document.getElementById(diconnectedUserId + 'online');
-  console.log(onlineSpan)
-  onlineSpan.remove();
+  removeOnlineStatusFrom(diconnectedUserId);
 });

@@ -54,33 +54,37 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
 //Get & post to channel id
 router.get('/:id', ensureAuthenticated, (req, res) => {
-  Channel.find((err, data) => {
+  Channel.find((err, channels) => {
     if (err) return console.error(err);
-    channels = data;
-  });
-  Channel.findOne({ _id: req.params.id })
-    .populate({
-      path: 'posts',
-      populate: {
-        path: 'by',
-        model: 'User',
-      },
-    })
-    .exec((err, channel) => {
-      if (err) {
-        console.log(err);
-        req.flash('error_msg', 'The requested channel does not exist.');
-        res.redirect('/');
-      } else {
-        res.render('channels', {
-          channel,
-          channels,
-          cssdir: '/',
-          user: req.user,
-          date_options: date_options,
-        });
-      }
+    User.find({}, (err, users) => {
+      if (err) return console.error(err);
+      Channel.findOne({ _id: req.params.id })
+      .populate({
+        path: 'posts',
+        populate: {
+          path: 'by',
+          model: 'User',
+        },
+        path: 'members',
+      })
+      .exec((err, channel) => {
+        if (err) {
+          console.log(err);
+          req.flash('error_msg', 'The requested channel does not exist.');
+          res.redirect('/');
+        } else {
+          res.render('channels', {
+            channel,
+            channels,
+            users,
+            cssdir: '/',
+            user: req.user,
+            date_options: date_options,
+          });
+        }
+      });
     });
+  });
 });
 
 router.post('/:id', ensureAuthenticated, (req, res) => {
@@ -151,16 +155,32 @@ router.post('/:id', ensureAuthenticated, (req, res) => {
   })
 } */
 
-//Start PM route
-router.get('/startPM/:PMrecieverEmail', (req, res) => {
-  //TODO check if channel exists aleady
-  Channel.findOne({ private: true }).exec((err, user) => {
+//Start DM route
+router.get('/startDM/:recieverUserId', (req, res) => {
+  Channel.findOne(
+    { private: true },
+    {
+      members: {
+        $and: [req.user._id, req.params.recieverUserId],
+      },
+    }
+  )
+  .exec((err, channel) => {
     if (err) return console.error(err);
-    res.render('pm_create', {
-      cssdir: '/',
-      user: req.user,
-      PMreciever: req.params.PMrecieverEmail,
-    });
+    /* if (err) {
+      const channel = new Channel({
+        by: req.user._id,
+        name: 'DM_channel',
+        description: 'DM_channel',
+        private: true,
+        members: [req.user._id, req.params.recieverUserId],
+      });
+      channel.save((err, channel) => {
+        if (err) return console.error(err);
+        console.log('The following channel was created:' + channel);
+      });
+    } */
+    res.redirect(`/channels/${channel._id}`);
   });
 });
 
