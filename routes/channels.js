@@ -9,7 +9,7 @@ const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 
 //'Home'
 router.get('/', ensureAuthenticated, (req, res) => {
-  Channel.find((err, channels) => {
+  Channel.find({ private: false }, (err, channels) => {
     if (err) return console.error(err);
     User.find({}, (err, users) => {
       if (err) return console.error(err);
@@ -18,6 +18,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
         channels: channels,
         user: req.user,
         users: users,
+        cssdir: '/',
       });
     });
   });
@@ -54,134 +55,85 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
 //Get & post to channel id
 router.get('/:id', ensureAuthenticated, (req, res) => {
-  Channel.find((err, channels) => {
+  Channel.find({ private: false }, (err, channels) => {
     if (err) return console.error(err);
     User.find({}, (err, users) => {
       if (err) return console.error(err);
       Channel.findOne({ _id: req.params.id })
-      .populate({
-        path: 'posts',
-        populate: {
-          path: 'by',
-          model: 'User',
-        },
-        path: 'members',
-      })
-      .exec((err, channel) => {
-        if (err) {
-          console.log(err);
-          req.flash('error_msg', 'The requested channel does not exist.');
-          res.redirect('/');
-        } else {
-          res.render('channels', {
-            channel,
-            channels,
-            users,
-            cssdir: '/',
-            user: req.user,
-            date_options: date_options,
-          });
-        }
-      });
+        .populate({
+          path: 'posts',
+          populate: {
+            path: 'by',
+            model: 'User',
+          },
+        })
+        .exec((err, channel) => {
+          if (err) {
+            console.log(err);
+            req.flash('error_msg', 'The requested channel does not exist.');
+            res.redirect('/');
+          } else {
+            res.render('channels', {
+              channel,
+              channels,
+              users,
+              cssdir: '/',
+              user: req.user,
+              date_options: date_options,
+            });
+          }
+        });
     });
   });
 });
 
 router.post('/:id', ensureAuthenticated, (req, res) => {
-  User.findOne({ email: req.body.userEmail }).exec((err, user) => {
+  const post = new Post({
+    by: req.user._id,
+    content: req.body.content,
+  });
+  post.save((err) => {
     if (err) return console.error(err);
-    const post = new Post({
-      by: user,
-      content: req.body.content,
-    });
-    post.save((err) => {
-      if (err) return console.error(err);
-      console.log('The following post was created:' + post);
-    });
     Channel.updateOne(
       { _id: req.params.id },
       { $push: { posts: post } },
-      (err, data) => {
+      (err) => {
         if (err) return console.error(err);
         res.redirect(`${req.params.id}`);
       }
     );
   });
 });
-//TODO include _id in html
-/* async function PMexixts(firstUserId, secondUserId) {
-  const userOne = await Users.findOne({email: firstUserId});
-  const userTwo = await Users.findOne({email: secondUserId});
-  const privateConv = await Channel.findOne({'members': { "$size" : 2, "$all": [ userOne, userTwo ] }, 'private': true})
-  var query = {'members': [userOne, userTwo]},
-    update = { expire: new Date() },
-    options = { upsert: true, new: true, setDefaultsOnInsert: true };
-}) */
-
-// Find the document
-/* Model.findOneAndUpdate(query, update, options, function(error, result) {
-    if (error) return;
-
-    // do something with the document
-});
-
-
-
-
-
-
-
-  await Users.findOne({
-    email: firstUserId
-  }).then(res => {
-    if (!res) throw 'Invalid first user id.'
-    else let userOne = res._id;
-  });
-  await Users.findOne({
-    email: secondUserId
-  }).then(res => {
-    if (!res) throw 'Invalid second user id.'
-    else let userTwo = res._id;
-  });
-  }).then(res => {
-    var result = parse_result(res)
-    return codesSchema.findOneAndUpdate({
-      used: false,
-      user_id: true
-    },{
-      used: true,
-      user_id: mongoose.Types.ObjectId(result._id)
-    })
-  })
-} */
 
 //Start DM route
-router.get('/startDM/:recieverUserId', (req, res) => {
-  Channel.findOne(
-    { private: true },
-    {
-      members: {
-        $and: [req.user._id, req.params.recieverUserId],
-      },
-    }
-  )
-  .exec((err, channel) => {
-    if (err) return console.error(err);
-    /* if (err) {
-      const channel = new Channel({
-        by: req.user._id,
-        name: 'DM_channel',
-        description: 'DM_channel',
-        private: true,
-        members: [req.user._id, req.params.recieverUserId],
-      });
-      channel.save((err, channel) => {
-        if (err) return console.error(err);
-        console.log('The following channel was created:' + channel);
-      });
-    } */
-    res.redirect(`/channels/${channel._id}`);
-  });
+router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
+  if (req.params.recieverUserId === req.user._id.toString())
+    res.send('<h1>Profile page goes here</h1>');
+  else {
+    Channel.findOne({
+      $and: [
+        { private: true },
+        { members: { $all: [req.user._id, req.params.recieverUserId] } },
+      ],
+    }).exec((err, channel) => {
+      if (channel) {
+        res.redirect(`/channels/${channel._id}`);
+      } else {
+        const channel = new Channel({
+          by: req.user._id,
+          name: 'DM_channel',
+          description: 'DM_channel',
+          private: true,
+          members: [req.user._id, req.params.recieverUserId],
+        });
+        channel.save((err, channel) => {
+          if (err) return console.error(err);
+          console.log('The following channel was created:' + channel);
+          res.redirect(`/channels/${channel._id}`);
+        });
+      }
+    });
+  }
 });
 
 router.post('/startPM/:PMrecieverEmail', (req, res) => {

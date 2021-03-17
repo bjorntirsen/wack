@@ -8,7 +8,7 @@
         </li>
       <% }) %>
       <li class="channel__li">
-        <a href="/home/channels/create">Create channel</a>
+        <a href="/channels/create">Create channel</a>
       </li>
     </ul>
   </div>
@@ -18,7 +18,7 @@
       <% if (users.length > 0) { %>
         <% users.forEach(user => { %>
           <li id="<%= user._id %>">
-            <a href="channels/startDM/<%= user._id %>" class="user__li"><%= user.name %></a>
+            <a href="<%=cssdir%>channels/startDM/<%= user._id %>" class="user__li"><%= user.name %></a>
           </li>
         <% }) %>
       <% } %>
