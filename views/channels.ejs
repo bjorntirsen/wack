@@ -12,13 +12,9 @@
       </li>
     </ul>
   </div>
-  <div class="sidebar__usersOnline">
-    <h3 class="col__header">Users Online</h3>
-    <ul id="usersOnlineUl"></ul>
-  </div>
-  <div class="sidebar__usersOffline">
-    <h3 class="col__header">Users Offline</h3>
-    <ul id="offlineUsers">
+  <div class="sidebar__users">
+    <h3 class="col__header">Direct messages</h3>
+    <ul id="usersUl">
       <% if (users.length > 0) { %>
         <% users.forEach(user => { %>
           <li id="<%= user._id %>">
@@ -28,7 +24,6 @@
       <% } %>
     </ul>
   </div>
-</div>
 <%- include ('./partials/messages') %>
 <% if (typeof channel!=='undefined') { %>
   <section class="container main__container row">

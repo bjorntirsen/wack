@@ -11,7 +11,7 @@ const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 router.get('/', ensureAuthenticated, (req, res) => {
   Channel.find((err, channels) => {
     if (err) return console.error(err);
-    User.find({ _id: { $ne: req.user._id } }, (err, users) => {
+    User.find({}, (err, users) => {
       if (err) return console.error(err);
       //console.log(users);
       res.render('channels', {

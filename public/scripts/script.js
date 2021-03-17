@@ -6,26 +6,22 @@ socket.emit('userDataFromClient', userId, userName, (error) => {
   if (error) console.log(error);
 });
 
-function updateWhoIsOnline(onlineUsers) {
-  usersOnlineUl.textContent = '';
+function renderUserStatus(onlineUsers) {
   onlineUsers.forEach((user) => {
-    if (user.userId !== userId) {
-      const item = document.createElement('a');
-      item.textContent = `${user.userName}`;
-      item.href = `channels/startPM/${user.userId}`;
+    let onlineId = user.userId + 'online'
+    if (document.getElementById(onlineId) === null) {
+      const item = document.createElement('span');
+      item.textContent = 'online';
+      if (user.userId === userId) {
+        item.textContent += ' (you)'
+      }
       item.id = user.userId + 'online';
-      item.className += 'btn';
-      item.addEventListener('click', (e) => {
-        socket.emit('startPM', user.userId);
-      });
-      usersOnlineUl.appendChild(item);
       const onlineUser = document.getElementById(user.userId);
-      //console.log('onlineUSer' +onlineUser);
-      offlineUsers.removeChild(onlineUser);
+      onlineUser.appendChild(item);
     }
   });
 };
 
 socket.on('onlineUsersFromServer', (onlineUsers) => {
-  updateWhoIsOnline(onlineUsers);
+  renderUserStatus(onlineUsers);
 });
