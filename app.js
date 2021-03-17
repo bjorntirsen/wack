@@ -71,9 +71,9 @@ io.on('connection', (socket) => {
       channelName,
     };
     onlineUsers.push(changedUser);
-    console.log(onlineUsers)
+    //console.log(onlineUsers);
     io.emit('onlineUsersFromServer', onlineUsers);
-  })
+  });
 
   socket.on('startPM', (PMuserId) => {
     console.log(PMuserId);
@@ -81,11 +81,12 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log('a user disconnected');
+    const diconnectedUser = onlineUsers.filter(user => user.socketId === socket.id);
+    socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
     onlineUsers.splice(
       onlineUsers.findIndex(({ id }) => id === socket.id),
       1
     );
-    socket.broadcast.emit('onlineUsersFromServer', onlineUsers);
   });
 });
 
