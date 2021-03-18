@@ -108,7 +108,7 @@ router.post('/:id', ensureAuthenticated, (req, res) => {
 //Start DM route
 router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
   if (req.params.recieverUserId === req.user._id.toString())
-    res.send('<h1>Profile page goes here</h1>');
+    res.redirect(`/profile/${req.user._id}`);
   else {
     Channel.findOne({
       $and: [

@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 const expressEjsLayout = require('express-ejs-layouts');
+const fileUpload = require('express-fileupload');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
@@ -21,13 +22,10 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const channelsRouter = require('./routes/channels');
-const apiRouter = require('./routes/api');
-
 app.set('view engine', 'ejs');
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use(expressEjsLayout);
 app.use(
@@ -47,10 +45,22 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const channelsRouter = require('./routes/channels');
+const profileRouter = require('./routes/profile');
+const apiRouter = require('./routes/api');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/channels', channelsRouter);
+app.use('/profile', profileRouter);
 app.use('/api', apiRouter);
 
 http.listen(3000, () => {

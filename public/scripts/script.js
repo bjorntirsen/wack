@@ -46,7 +46,6 @@ function renderOnlineUserStatus(onlineUsers) {
 
 function removeOnlineStatusFrom(diconnectedUserId) {
   const onlineSpan = document.getElementById(diconnectedUserId + 'online');
-  console.log(onlineSpan);
   onlineSpan.remove();
 }
 

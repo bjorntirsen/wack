@@ -20,12 +20,13 @@ exports = module.exports = (io) => {
         channelName,
       };
       pushToArray(onlineUsers, changedUser);
+      socket.leaveAll();
       socket.join(channelName);
       io.emit('onlineUsersFromServer', onlineUsers);
     });
 
     socket.on('post', (post) => {
-      io.emit('postFromServer', post);
+      io.to(post.to).emit('postFromServer', post);
     });
 
     socket.on('startPM', (PMuserId) => {
