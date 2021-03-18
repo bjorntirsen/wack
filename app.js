@@ -83,11 +83,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log('a user disconnected');
     const diconnectedUser = onlineUsers.filter(
       (user) => user.socketId === socket.id
     );
-    if (typeof diconnectedUser === Array) {
+    if (diconnectedUser !== undefined) {
       socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
       onlineUsers.splice(
         onlineUsers.findIndex(({ id }) => id === socket.id),

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 router.use(express.json());
 const Channel = require('../models/channel');
-const User = require('../models/user');
 const Post = require('../models/post');
 const { ensureAuthenticated } = require('../config/auth.js');
 
