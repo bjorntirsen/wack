@@ -88,6 +88,18 @@ header {
   margin: 1rem;
 }
 
+.medium_image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.icon_image {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }

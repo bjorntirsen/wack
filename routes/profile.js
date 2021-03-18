@@ -36,7 +36,7 @@ router.post('/uploadPhoto', ensureAuthenticated, (req, res) => {
       console.log(extension)
       const file_name = `/uploads/${req.user._id}.${extension}`;
       console.log(file_name);
-      profile_pic.mv(file_name);
+      profile_pic.mv(`.${file_name}`);
       User.updateOne({_id: req.user._id}, { $set: { profilePhoto: file_name } }).exec(
         (error, data) => {
           if (error) console.log(error);
