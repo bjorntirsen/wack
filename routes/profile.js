@@ -29,21 +29,18 @@ router.get('/:userId', ensureAuthenticated, (req, res) => {
 router.post('/uploadPhoto', ensureAuthenticated, (req, res) => {
   try {
     if (req.files) {
-      console.log('inside post');
       const profile_pic = req.files.profile_pic;
-      console.log(profile_pic)
       const extension = profile_pic.name.split('.').slice(-1)[0];
-      console.log(extension)
       const file_name = `/uploads/${req.user._id}.${extension}`;
-      console.log(file_name);
       profile_pic.mv(`.${file_name}`);
-      User.updateOne({_id: req.user._id}, { $set: { profilePhoto: file_name } }).exec(
-        (error, data) => {
-          if (error) console.log(error);
-          console.log(data);
-          res.redirect(`/profile/${req.user._id}`);
-        }
-      );
+      User.updateOne(
+        { _id: req.user._id },
+        { $set: { profilePhoto: file_name } }
+      ).exec((error, data) => {
+        if (error) console.log(error);
+        console.log('Sucessfully uploaded photo:' + data);
+        res.redirect(`/profile/${req.user._id}`);
+      });
     } else {
       res.send('<h1>Err: No file uploaded.</h1>');
     }
