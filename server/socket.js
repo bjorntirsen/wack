@@ -1,7 +1,7 @@
 exports = module.exports = (io) => {
   //Keep track of online users
   function pushToArray(arr, obj) {
-    const index = arr.findIndex((e) => e.id === obj.id);
+    const index = arr.findIndex((e) => e.userId === obj.userId);
     if (index === -1) arr.push(obj);
     else arr[index] = obj;
   }
@@ -19,10 +19,13 @@ exports = module.exports = (io) => {
         userId,
         channelName,
       };
-      onlineUsers.push(changedUser);
-      //console.log(onlineUsers);
+      pushToArray(onlineUsers, changedUser);
       socket.join(channelName);
       io.emit('onlineUsersFromServer', onlineUsers);
+    });
+
+    socket.on('post', (post) => {
+      io.emit('postFromServer', post);
     });
 
     socket.on('startPM', (PMuserId) => {
@@ -33,7 +36,7 @@ exports = module.exports = (io) => {
       const diconnectedUser = onlineUsers.filter(
         (user) => user.socketId === socket.id
       );
-      if (diconnectedUser !== undefined) {
+      if (diconnectedUser.length > 0) {
         socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
         onlineUsers.splice(
           onlineUsers.findIndex(({ id }) => id === socket.id),
