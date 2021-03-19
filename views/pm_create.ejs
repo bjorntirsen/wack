@@ -1,29 +1,4 @@
-<div class="sidebar">
-  <div class="sidebar__channels">
-    <h3 class="">Channels</h3>
-    <ul id="channels">
-      <% channels.forEach(channel => { %>
-        <li class="channel__li">
-          <a href="../channels/<%= channel.id %>">#<%= channel.name %></a>
-        </li>
-      <% }) %>
-      <li class="channel__li">
-        <a href="/home/channels/create">Create channel</a>
-      </li>
-    </ul>
-  </div>
-  <div class="sidebar__users">
-    <h3 class="col__header">Direct messages</h3>
-    <ul id="usersUl">
-      <% if (users.length > 0) { %>
-        <% users.forEach(user => { %>
-          <li id="<%= user._id %>">
-            <a href="channels/startPM/<%= user._id %>" class="user__li"><%= user.name %></a>
-          </li>
-        <% }) %>
-      <% } %>
-    </ul>
-  </div>
+<%- include ('./partials/sidebar') %>
 <%- include ('./partials/messages') %>
 <% if (typeof channel!=='undefined') { %>
 <section class="second-section container">

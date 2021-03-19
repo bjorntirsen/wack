@@ -51,11 +51,11 @@ app.use(
   })
 );
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const channelsRouter = require('./routes/channels');
-const profileRouter = require('./routes/profile');
-const apiRouter = require('./routes/api');
+const indexRouter = require('./routes/indexRoutes');
+const usersRouter = require('./routes/usersRoutes');
+const channelsRouter = require('./routes/channelsRoutes');
+const profileRouter = require('./routes/profileRoutes');
+const apiRouter = require('./routes/apiRoutes');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

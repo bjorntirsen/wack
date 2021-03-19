@@ -1,54 +1,43 @@
-<section class="second-section container">
-  <div class="card">
-    <form method="post" action="./create">
-      <h1>Create a channel</h1>
-      <p class="text-muted">
-        Channels are where your team communicates. They're best when organized
-        around a topic - #marketing, for example.
-      </p>
-      <div class="mb-1">
-        <strong>Name</strong><br />
-        <input
-          class=""
-          name="name"
-          type="text"
-          placeholder="e.g. plan-budget"
-          maxlength="80"
-        />
-      </div>
-      <div class="mb-1">
-        <strong>Description</strong>
-        <span class="text-muted">(optional)</span><br />
-        <input
-          class=""
-          name="description"
-          type="text"
-          placeholder=""
-          maxlength="80"
-        /><br />
-        <span class="text-muted">What is this channel about?</span>
-      </div>
-      <div class="mb-1">
-        <strong>Make private</strong>
-        <input class="" type="checkbox" name="private" />
-        <br />
-        <span class="text-muted"
-          >When a channel is set to private, it can only viewed or joined by
-          invitation.</span
-        >
-      </div>
-      <input
-        type="hidden"
-        id="userEmail"
-        name="userEmail"
-        value="<%= user.email %>"
-      />
-      <div class="d-flex">
-        <input class="btn btn__medium" type="submit" value="Create" />
-      </div>
-    </form>
-  </div>
-</section>
+<%- include ('./partials/sidebar') %>
+<%- include ('./partials/messages') %>
+<main class="container main__container">
+  <section class="second-section container">
+    <div class="card">
+      <form method="post" action="./create">
+        <h1>Create a channel</h1>
+        <p class="text-muted">
+          Channels are where your team communicates. They're best when organized
+          around a topic - #marketing, for example.
+        </p>
+        <div class="mb-1">
+          <strong>Name</strong><br />
+          <input
+            class=""
+            name="name"
+            type="text"
+            placeholder="e.g. plan-budget"
+            maxlength="80"
+          />
+        </div>
+        <div class="mb-1">
+          <strong>Description</strong>
+          <span class="text-muted">(optional)</span><br />
+          <input
+            class=""
+            name="description"
+            type="text"
+            placeholder=""
+            maxlength="80"
+          /><br />
+          <span class="text-muted">What is this channel about?</span>
+        </div>
+        <div class="d-flex j-cont-center">
+          <input class="btn btn__medium" type="submit" value="Create" />
+        </div>
+      </form>
+    </div>
+  </section>
+</main>
 <!-- ----------JAVASCRIPT---------- -->
 <script src="/socket.io/socket.io.js"></script>
 <script src="public/scripts/script.js"></script>

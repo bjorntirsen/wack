@@ -1,5 +1,5 @@
-<% if (typeof title==='undefined' ) { title='Wack' } %>
-<% if (typeof cssdir==='undefined' ) { cssdir='' } %>
+<% if (typeof title==='undefined' ) { title='Wack' } %> <% if (typeof
+cssdir==='undefined' ) { cssdir='' } %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,25 +23,37 @@
         <nav>
           <ul class="nav__list nav__list--primary">
             <li class="nav__item"><a class="nav__link" href="/">home</a></li>
-            
+
             <li class="nav__item"><a class="nav__link" href="#">about</a></li>
             <li class="nav__item"><a class="nav__link" href="#">contact</a></li>
           </ul>
           <ul class="nav__list">
             <% if (typeof user != 'undefined' ) { %>
-              <input type="text" hidden id="userId" value="<%= user._id %>">
-              <input type="text" hidden id="userName" value="<%= user.name %>">
+              <input hidden id="userId" value="<%= user._id %>" />
+              <input hidden id="userName" value="<%= user.name %>" />
+              <input
+                hidden
+                id="userEmail"
+                name="userEmail"
+                value="<%= user.email %>"
+              />
               <li class="nav__item">
                 <span>Logged in as: <%= user.name %></span>
               </li>
               <li class="nav__item">
-                <a class="nav__link btn nav__btn" href="<%= cssdir %>users/signout">sign out</a>
+                <a
+                  class="nav__link btn nav__btn"
+                  href="<%= cssdir %>users/signout"
+                  >sign out</a
+                >
               </li>
             <% } else { %>
-            <li class="nav__item"><a class="nav__link" href="/signin">sign in</a></li>
-            <li class="nav__item">
-              <a class="nav__link btn nav__btn" href="/signup">sign up</a>
-            </li>
+              <li class="nav__item">
+                <a class="nav__link" href="/signin">sign in</a>
+              </li>
+              <li class="nav__item">
+                <a class="nav__link btn nav__btn" href="/signup">sign up</a>
+              </li>
             <% } %>
           </ul>
         </nav>

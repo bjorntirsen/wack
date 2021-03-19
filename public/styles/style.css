@@ -111,6 +111,11 @@ header {
 
 .d-flex {
   display: flex;
+  align-items: center;
+}
+
+.j-cont-center {
+  justify-content: center;
 }
 
 .btn:hover {
@@ -133,11 +138,17 @@ header {
   padding: 1rem;
 }
 
+.sidebar {
+  float: left;
+  width: 400px;
+}
+
 .channel__li {
   list-style-type: none;
 }
 
 #channels > .channel__li {
+  padding-left: 1rem;
   font-size: 1rem;
 }
 
@@ -155,10 +166,15 @@ header {
   font-size: 0.8rem;
 }
 
-.card{
+.card {
   width: 400px;
   max-width: 95%;
   margin: 0 auto;
+  text-align: center;
+}
+
+.card__item {
+  margin-bottom: 0.5rem;
 }
 
 #form {
@@ -207,14 +223,16 @@ header {
   outline: none;
 }
 
-#posts, #users {
+#posts,
+#users {
   list-style-type: none;
   margin: 0;
   padding: 0;
   padding-bottom: 4rem;
 }
 
-#posts > li, #users > li {
+#posts > li,
+#users > li {
   padding: 0.5rem 1rem;
   margin: 0.5rem;
   background-color: lightgray;
@@ -248,7 +266,7 @@ header {
   .col__sidebar {
     width: 20%;
   }
-  
+
   .col__posts {
     width: 65%;
   }

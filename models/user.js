@@ -24,6 +24,7 @@ const UserSchema = new mongoose.Schema({
   },
   profilePhoto: {
     type: String,
+    default: '/uploads/nophoto.png',
   },
 });
 const User = mongoose.model('User', UserSchema);

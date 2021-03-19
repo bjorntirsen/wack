@@ -7,20 +7,10 @@ const { ensureAuthenticated } = require('../config/auth.js');
 
 const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 
-//'Home'
 router.get('/', ensureAuthenticated, (req, res) => {
-  Channel.find({ private: false }, (err, channels) => {
-    if (err) return console.error(err);
-    User.find({}, (err, users) => {
-      if (err) return console.error(err);
-      //console.log(users);
-      res.render('channels', {
-        channels: channels,
-        user: req.user,
-        users: users,
-        cssdir: '/',
-      });
-    });
+  res.render('channels', {
+    user: req.user,
+    cssdir: '/',
   });
 });
 
@@ -32,7 +22,7 @@ router.get('/create', ensureAuthenticated, (req, res) => {
 router.post('/create', ensureAuthenticated, (req, res) => {
   User.findOne({ email: req.body.userEmail }).exec((err, user) => {
     const channel = new Channel({
-      by: user,
+      by: req.user._id,
       name: req.body.name,
       description: req.body.description || '',
       private: req.body.private ? true : false,
@@ -40,7 +30,7 @@ router.post('/create', ensureAuthenticated, (req, res) => {
     channel.save((err) => {
       if (err) return console.error(err);
       console.log('The following channel was created:' + channel);
-      res.redirect('/');
+      res.redirect('/channels');
     });
   });
 });
@@ -55,36 +45,28 @@ router.get('/delete/:id', ensureAuthenticated, (req, res) => {
 
 //Get & post to channel id
 router.get('/:id', ensureAuthenticated, (req, res) => {
-  Channel.find({ private: false }, (err, channels) => {
-    if (err) return console.error(err);
-    User.find({}, (err, users) => {
-      if (err) return console.error(err);
-      Channel.findOne({ _id: req.params.id })
-        .populate({
-          path: 'posts',
-          populate: {
-            path: 'by',
-            model: 'User',
-          },
-        })
-        .exec((err, channel) => {
-          if (err) {
-            console.log(err);
-            req.flash('error_msg', 'The requested channel does not exist.');
-            res.redirect('/');
-          } else {
-            res.render('channels', {
-              channel,
-              channels,
-              users,
-              cssdir: '/',
-              user: req.user,
-              date_options: date_options,
-            });
-          }
+  Channel.findOne({ _id: req.params.id })
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'by',
+        model: 'User',
+      },
+    })
+    .exec((err, channel) => {
+      if (err) {
+        console.log(err);
+        req.flash('error_msg', 'The requested channel does not exist.');
+        res.redirect('/');
+      } else {
+        res.render('channels', {
+          channel,
+          cssdir: '/',
+          user: req.user,
+          date_options: date_options,
         });
+      }
     });
-  });
 });
 
 router.post('/:id', ensureAuthenticated, (req, res) => {

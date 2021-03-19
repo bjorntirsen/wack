@@ -10,7 +10,12 @@ router.use(express.urlencoded({ extended: true }));
 router.post('/register', (req, res) => {
   const { name, email, password, password2 } = req.body;
   let errors = [];
-  console.log(' Name ' + name + ' email :' + email + ' pass:' + password);
+  console.log(
+    'For testing purposes. The login submitted was email: ' +
+      email +
+      ' and password: ' +
+      password
+  );
   if (!name || !email || !password || !password2) {
     errors.push({ msg: 'Please fill in all fields.' });
   }
@@ -33,7 +38,6 @@ router.post('/register', (req, res) => {
   } else {
     //Validation passed
     User.findOne({ email: email }).exec((err, user) => {
-      console.log('The following user was created:' + user);
       if (user) {
         errors.push({ msg: 'Email already registered.' });
         res.render('signup', {
@@ -60,6 +64,7 @@ router.post('/register', (req, res) => {
             newUser
               .save()
               .then((value) => {
+                console.log('The following user was created:');
                 console.log(value);
                 req.flash('success_msg', 'You have now registered!');
                 res.redirect('/signin');

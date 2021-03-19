@@ -6,6 +6,7 @@
     <input
       type="name"
       name="name"
+      autocomplete="name"
       placeholder="Enter Name"
       value="<%= typeof name != 'undefined' ? name : '' %>"
     />
@@ -15,6 +16,7 @@
     <input
       type="email"
       name="email"
+      autocomplete="email"
       placeholder="Enter Email"
       value="<%= typeof email != 'undefined' ? email : '' %>"
     />
@@ -24,6 +26,7 @@
     <input
       type="password"
       name="password"
+      autocomplete="new-password"
       placeholder="Create Password"
       value="<%= typeof password != 'undefined' ? password : '' %>"
     />
@@ -33,6 +36,7 @@
     <input
       type="password"
       name="password2"
+      autocomplete="new-password"
       placeholder="Confirm Password"
       value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
     />

@@ -1,41 +1,44 @@
 <%- include ('./partials/sidebar') %>
 <%- include ('./partials/messages') %>
-<% if (typeof channel!=='undefined') { %>
-  <section class="container main__container row">
-    <div class="col__posts">
-      <h2><%= channel.name %></h2>
-      <h3 class="col__header">Posts in channel</h3>
-      <ul id="posts">
-        <% if (channel.posts.length > 0) { %>
-          <% channel.posts.forEach(post => { %>
-            <li class="channel__li">
-              <span>By <%= post.by.name %></>
-              <% let formatted_date = post.date.toLocaleDateString('en-gb', date_options) %>
-              <% let hours = post.date.getHours() %>
-              <% let minutes = post.date.getMinutes() %>
-              <span> on <%= formatted_date %> at <%= hours %>:<%= minutes %>:</span>
-              <p><%= post.content %></p>
-            </li>
-          <% }) %>
-        <% } %>
-      </ul>
-    </div>
-  </section>
-  <section class="container input__container">
-    <form id="form2" class="form" method="post" action="../api/<%= channel.id %>" autocomplete="off">
-      <div class="f-grow-1">
-        <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
-        <input type="hidden" id="userEmail" name="userEmail" value="<%= user.email %>">
+<main class="container main__container">
+  <% if (typeof channel!=='undefined') { %>
+    <section class="row">
+      <div class="col__posts">
+        <h2><%= channel.name %></h2>
+        <h3 class="col__header">Posts in channel</h3>
+        <ul id="posts">
+          <% if (channel.posts.length > 0) { %>
+            <% channel.posts.forEach(post => { %>
+              <li class="channel__li">
+                <span>By <%= post.by.name %></>
+                  <% let formatted_date = post.date.toLocaleDateString('en-gb', date_options) %>
+                  <% let hours = post.date.getHours() %>
+                  <% let minutes = post.date.getMinutes()<10?'0':'' + post.date.getMinutes() %>
+                  <span> on <%= formatted_date %> at <%= hours %>:<%= minutes %>:</span>
+                  <p><%= post.content %></p>
+                </li>
+              <% }) %>
+          <% } %>
+        </ul>
       </div>
-      <input id="submit_btn" class="btn btn__post" type="button" value="Post" />
-    </form>
-  </section>
-<% } else { %>
-  <section class="container main__container row">
-    <h1>Welcome <%= user.name %></h1>
-  </section>
-<% } %>
+    </section>
+    <section class="container input__container">
+      <form id="form2" class="form" method="post" action="../api/<%= channel.id %>" autocomplete="off">
+        <div class="f-grow-1">
+          <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
+        </div>
+        <input id="submit_btn" class="btn btn__post" type="button" value="Post" />
+      </form>
+    </section>
+  <% } else { %>
+    <section class="row">
+      <h1>Welcome <%= user.name %></h1>
+    </section>
+  <% } %>
+</main>
 <!-- ----------JAVASCRIPT---------- -->
 <script src="../socket.io/socket.io.js"></script>
-<script src="../public/scripts/script.js"></script>
-<script src="../public/scripts/channel.js"></script>
+<script src="../public/scripts/utils.js"></script>
+<script src="../public/scripts/useApi.js"></script>
+<script src="../public/scripts/useSocket.js"></script>
+<script src="../public/scripts/main.js"></script>
