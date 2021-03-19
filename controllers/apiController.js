@@ -14,7 +14,7 @@ exports.createPost = (req, res) => {
       { $push: { posts: post } },
       (err) => {
         if (err) return handleError(err);
-        res.end();
+        res.status(201).json('Post sucessfully created.');
       }
     );
   });

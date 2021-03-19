@@ -1,23 +1,38 @@
-<%- include ('./partials/sidebar') %>
-<%- include ('./partials/messages') %>
-  <section class="container main__container row">
-    <h1>Welcome <%= user.name %></h1>
-    <h2>This is your profile page</h2>
+<%- include ('./partials/sidebar') %> <%- include ('./partials/messages') %>
+<main class="container main__container">
+  <div class="card">
+    <h1>This is your profile page</h1>
     <p>Name: <%= user.name %></p>
-    <p>UserId: <%= user._id %></p>
+    <p>Email: <%= user.email %></p>
     <form
       method="POST"
       enctype="multipart/form-data"
       action="/profile/uploadPhoto"
     >
-      <input type="file" name="profile_pic" /><br />
-      <input type="submit" value="Save" />
+      <img
+        class="medium_image"
+        src="<%= user.profilePhoto %>"
+        alt="<%= user.name %>"
+      />
+      <div class="d-flex j-cont-center">
+        <input
+          type="file"
+          name="profile_pic"
+          id="profile_pic"
+          class="inputfile"
+        />
+        <label for="profile_pic">
+          Select new profile photo
+        </label>
+      </div>
+      <input class="btn" type="submit" value="Save" />
     </form>
-    <% if (user.profilePhoto) { %>
-      <img class="medium_image" src="<%= user.profilePhoto %>" alt="<%= user.name %>">
-    <% } %> 
-  </section>
+  </div>
+</main>
 <!-- ----------JAVASCRIPT---------- -->
 <script src="../socket.io/socket.io.js"></script>
-<script src="../public/scripts/script.js"></script>
-<script src="../public/scripts/channel.js"></script>
+<script src="../public/scripts/utils.js"></script>
+<script src="../public/scripts/useApi.js"></script>
+<script src="../public/scripts/useSocket.js"></script>
+<script src="../public/scripts/main.js"></script>
+<script src="../public/scripts/profile.js"></script>

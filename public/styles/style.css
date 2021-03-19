@@ -63,15 +63,31 @@ header {
   opacity: 0.5;
 }
 
-.btn {
+.btn, .inputfile + label {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
   padding: 0.2em 0.8em;
   border-radius: 100px;
+  margin: 0.2rem;
   border: none;
   text-transform: uppercase;
   background-color: lightgray;
+  cursor: pointer;
+}
+
+.btn:hover, .inputfile:focus + label,
+.inputfile + label:hover {
+  text-decoration: none;
+  opacity: 0.5;
+}
+
+.btn:focus, .inputfile:focus + label {
+  text-decoration: none;
+  opacity: 0.5;
+  outline: 1px dotted #000;
+	outline: -webkit-focus-ring-color auto 5px;
 }
 
 .btn__medium {
@@ -86,6 +102,15 @@ header {
   width: 100px;
   height: 50px;
   margin: 1rem;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
 
 .medium_image {
@@ -116,11 +141,6 @@ header {
 
 .j-cont-center {
   justify-content: center;
-}
-
-.btn:hover {
-  text-decoration: none;
-  opacity: 0.5;
 }
 
 .main__container {
@@ -167,7 +187,7 @@ header {
 }
 
 .card {
-  width: 400px;
+  width: 500px;
   max-width: 95%;
   margin: 0 auto;
   text-align: center;
