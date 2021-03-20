@@ -7,7 +7,7 @@ const utils = {
       a.href = `../channels/${channel._id}`;
       a.innerHTML = `#${channel.name}`;
       li.appendChild(a);
-      channels.appendChild(li);
+      channels.insertBefore(li, create);
     });
   },
 

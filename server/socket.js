@@ -22,8 +22,10 @@ exports = module.exports = (io) => {
     });
 
     socket.on('disconnect', () => {
-      io.emit('userOffline', socketUsers[socket.id].userId);
-      delete socketUsers[socket.id];
+      if (socketUsers && socketUsers[socket.id]) {
+        io.emit('userOffline', socketUsers[socket.id].userId);
+        delete socketUsers[socket.id];
+      }
     });
   });
 };

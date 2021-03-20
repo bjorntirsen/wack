@@ -16,6 +16,12 @@
                   <% let minutes = post.date.getMinutes()<10?'0':'' + post.date.getMinutes() %>
                   <span> on <%= formatted_date %> at <%= hours %>:<%= minutes %>:</span>
                   <p><%= post.content %></p>
+                  <% if (user._id.toString() === post.by._id.toString() || user.adminUser === true) { %>
+                    <span>
+                      <a href="/channels/edit/<%= channel._id %>/<%= post._id %>" >Edit</a>
+                      <a href="/channels/delete/<%= channel._id %>/<%= post._id %>" >Delete</a>
+                    </span>
+                  <% } %>
                 </li>
               <% }) %>
           <% } %>
