@@ -12,8 +12,6 @@ const utils = {
   },
 
   renderUsers: (users) => {
-    console.log('in renderUsers')
-    console.log('RU users are' + users)
     users.forEach((user) => {
       const li = document.createElement('li');
       li.classList.add('d-flex');
@@ -33,12 +31,9 @@ const utils = {
   },
 
   renderOnlineUserStatus: (socketUsers) => {
-    console.log('in renderOnlineUserStatus')
-    console.log('ROUS socketUsers are:')
-    console.log(socketUsers)
-
-    let arrayOfSocketUsers = Object.entries(socketUsers).map(element => element[1])
-    console.log(arrayOfSocketUsers)
+    let arrayOfSocketUsers = Object.entries(socketUsers).map(
+      (element) => element[1]
+    );
     arrayOfSocketUsers.forEach((user) => {
       let onlineId = user.userId + 'online';
       if (document.getElementById(onlineId) === null) {
@@ -55,8 +50,6 @@ const utils = {
   },
 
   removeOnlineStatusFrom: (diconnectedUserId) => {
-    console.log('in removeOnlineStatusFrom')
-    console.log('ROSF diconnectedUserId is' + diconnectedUserId)
     const onlineSpan = document.getElementById(diconnectedUserId + 'online');
     onlineSpan.remove();
   },

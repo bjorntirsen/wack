@@ -11,8 +11,6 @@ exports = module.exports = (io) => {
       socket.leaveAll();
       socket.join(channelName);
       io.emit('socketUsersFromServer', socketUsers);
-      console.log('i just emitted this object')
-      console.log(socketUsers)
     });
 
     socket.on('post', (post) => {
@@ -23,10 +21,8 @@ exports = module.exports = (io) => {
       console.log(PMuserId);
     });
 
-    io.on('disconnect', () => {
-      console.log('im gonna delete this user:')
-      console.log(socketUsers[socket.id])
-      io.emit('userOffline', socketUsers);
+    socket.on('disconnect', () => {
+      io.emit('userOffline', socketUsers[socket.id].userId);
       delete socketUsers[socket.id];
     });
   });
