@@ -20,18 +20,16 @@ router.get('/create', ensureAuthenticated, (req, res) => {
 });
 
 router.post('/create', ensureAuthenticated, (req, res) => {
-  User.findOne({ email: req.body.userEmail }).exec((err, user) => {
-    const channel = new Channel({
-      by: req.user._id,
-      name: req.body.name,
-      description: req.body.description || '',
-      private: req.body.private ? true : false,
-    });
-    channel.save((err) => {
-      if (err) return console.error(err);
-      console.log('The following channel was created:' + channel);
-      res.redirect('/channels');
-    });
+  const channel = new Channel({
+    by: req.user._id,
+    name: req.body.name,
+    description: req.body.description || '',
+    private: req.body.private ? true : false,
+  });
+  channel.save((err) => {
+    if (err) return console.error(err);
+    console.log('The following channel was created:' + channel);
+    res.redirect('/channels');
   });
 });
 
@@ -90,7 +88,7 @@ router.post('/:id', ensureAuthenticated, (req, res) => {
 //Start DM route
 router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
   if (req.params.recieverUserId === req.user._id.toString())
-    res.redirect(`/profile/${req.user._id}`);
+    res.redirect('/profile/');
   else {
     Channel.findOne({
       $and: [

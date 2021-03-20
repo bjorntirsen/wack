@@ -18,15 +18,9 @@ cssdir==='undefined' ) { cssdir='' } %>
     <header>
       <div class="container nav__container">
         <div class="logo__wrapper">
-          <span class="logo">wack</span>
+          <span class="logo"><a class="nav__link" href="/">wack</a></span>
         </div>
         <nav>
-          <ul class="nav__list nav__list--primary">
-            <li class="nav__item"><a class="nav__link" href="/">home</a></li>
-
-            <li class="nav__item"><a class="nav__link" href="#">about</a></li>
-            <li class="nav__item"><a class="nav__link" href="#">contact</a></li>
-          </ul>
           <ul class="nav__list">
             <% if (typeof user != 'undefined' ) { %>
               <input hidden id="userId" value="<%= user._id %>" />

@@ -1,29 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const Channel = require('../models/channel');
 const User = require('../models/user');
 const { ensureAuthenticated } = require('../config/auth.js');
 
 router.use(express.urlencoded({ extended: true }));
 
-router.get('/:userId', ensureAuthenticated, (req, res) => {
-  if (req.params.userId === req.user._id.toString()) {
-    Channel.find({ private: false }, (err, channels) => {
-      if (err) return console.error(err);
-      User.find({}, (err, users) => {
-        if (err) return console.error(err);
-        //console.log(users);
-        res.render('profile', {
-          channels: channels,
-          user: req.user,
-          users: users,
-          cssdir: '/',
-        });
-      });
-    });
-  } else {
-    res.redirect(`/`);
-  }
+router.get('/', ensureAuthenticated, (req, res) => {
+  res.render('profile', {
+    user: req.user,
+    cssdir: '/',
+  });
+});
+
+router.post('/', ensureAuthenticated, (req, res) => {
+  const userName = req.body.newUserName
+  const userEmail = req.body.newUserEmail
+  User.updateOne({_id: req.user._id}, { $set: { name: userName, email: userEmail } }).exec((err, data) => {
+    if (err) console.log(err)
+    console.log('Sucessfully edited user details.');
+    res.redirect(`/profile/`);
+  })
 });
 
 router.post('/uploadPhoto', ensureAuthenticated, (req, res) => {
@@ -38,11 +34,11 @@ router.post('/uploadPhoto', ensureAuthenticated, (req, res) => {
         { $set: { profilePhoto: file_name } }
       ).exec((error, data) => {
         if (error) console.log(error);
-        console.log('Sucessfully uploaded photo:' + data);
-        res.redirect(`/profile/${req.user._id}`);
+        console.log('Sucessfully uploaded photo.');
+        res.redirect(`/profile/`);
       });
     } else {
-      res.send('<h1>Err: No file uploaded.</h1>');
+      res.render('<h1>Err: No file uploaded.</h1>');
     }
   } catch (error) {
     res.send(error);

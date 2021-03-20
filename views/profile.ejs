@@ -2,8 +2,16 @@
 <main class="container main__container">
   <div class="card">
     <h1>This is your profile page</h1>
-    <p>Name: <%= user.name %></p>
-    <p>Email: <%= user.email %></p>
+    <h2>Feel free to edit your details</h2>
+    <form method="POST" action="/profile">
+      <span>Name:</span><br />
+      <input type="text" name="newUserName" value="<%= user.name %>" /><br />
+      <span>Email:</span><br />
+      <input type="text" name="newUserEmail" value="<%= user.email %>" /><br />
+      <input type="submit" class="btn" value="Send changes" />
+    </form>
+    <hr>
+
     <form
       method="POST"
       enctype="multipart/form-data"
@@ -21,9 +29,7 @@
           id="profile_pic"
           class="inputfile"
         />
-        <label for="profile_pic">
-          Select new profile photo
-        </label>
+        <label for="profile_pic"> Select new profile photo </label>
       </div>
       <input class="btn" type="submit" value="Save" />
     </form>
