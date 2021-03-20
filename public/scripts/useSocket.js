@@ -1,6 +1,6 @@
 const socket = io();
 
-socket.on('onlineUsersFromServer', utils.renderOnlineUserStatus);
+socket.on('socketUsersFromServer', utils.renderOnlineUserStatus);
 
 socket.on('userOffline', utils.removeOnlineStatusFrom);
 

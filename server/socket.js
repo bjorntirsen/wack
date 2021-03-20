@@ -1,28 +1,18 @@
 exports = module.exports = (io) => {
-  //Keep track of online users
-  function pushToArray(arr, obj) {
-    const index = arr.findIndex((e) => e.userId === obj.userId);
-    if (index === -1) arr.push(obj);
-    else arr[index] = obj;
-  }
   function getChannelName(socketReferer) {
     return socketReferer.split('/').slice(-1)[0];
   }
-  let onlineUsers = [];
+  let socketUsers = {};
 
   io.on('connection', (socket) => {
     socket.on('userDataFromClient', (userId, userName) => {
       const channelName = getChannelName(socket.handshake.headers.referer);
-      const changedUser = {
-        socketId: socket.id,
-        userName,
-        userId,
-        channelName,
-      };
-      pushToArray(onlineUsers, changedUser);
+      socketUsers[socket.id] = { userId, userName, channelName};
       socket.leaveAll();
       socket.join(channelName);
-      io.emit('onlineUsersFromServer', onlineUsers);
+      io.emit('socketUsersFromServer', socketUsers);
+      console.log('i just emitted this object')
+      console.log(socketUsers)
     });
 
     socket.on('post', (post) => {
@@ -33,17 +23,11 @@ exports = module.exports = (io) => {
       console.log(PMuserId);
     });
 
-    socket.on('disconnect', () => {
-      const diconnectedUser = onlineUsers.filter(
-        (user) => user.socketId === socket.id
-      );
-      if (diconnectedUser.length > 0) {
-        socket.broadcast.emit('userOffline', diconnectedUser[0].userId);
-        onlineUsers.splice(
-          onlineUsers.findIndex(({ id }) => id === socket.id),
-          1
-        );
-      }
+    io.on('disconnect', () => {
+      console.log('im gonna delete this user:')
+      console.log(socketUsers[socket.id])
+      io.emit('userOffline', socketUsers);
+      delete socketUsers[socket.id];
     });
   });
 };
