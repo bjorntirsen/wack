@@ -19,6 +19,10 @@ const postSchema = Schema({
     default: new Date(),
   },
   readBy: [{ type: Schema.Types.ObjectId, ref: 'ReadBy' }],
+  edited: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model('Post', postSchema);

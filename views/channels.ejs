@@ -18,8 +18,8 @@
                   <p><%= post.content %></p>
                   <% if (user._id.toString() === post.by._id.toString() || user.adminUser === true) { %>
                     <span>
-                      <a href="/channels/edit/<%= channel._id %>/<%= post._id %>" >Edit</a>
-                      <a href="/channels/delete/<%= channel._id %>/<%= post._id %>" >Delete</a>
+                      <a href="/channels/editPost/<%= post._id %>" >Edit</a>
+                      <a href="/channels/deletePost/<%= post._id %>" >Delete</a>
                     </span>
                   <% } %>
                 </li>

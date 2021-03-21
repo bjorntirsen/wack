@@ -3,7 +3,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 
 exports.createPost = (req, res) => {
-  const post = new Post({
+  var post = new Post({
     by: req.user._id,
     content: req.body.content,
   });
@@ -14,7 +14,7 @@ exports.createPost = (req, res) => {
       { $push: { posts: post } },
       (err) => {
         if (err) return handleError(err);
-        res.status(201).json('Post sucessfully created.');
+        res.status(201).json(post);
       }
     );
   });

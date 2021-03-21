@@ -25,6 +25,7 @@ cssdir==='undefined' ) { cssdir='' } %>
             <% if (typeof user != 'undefined' ) { %>
               <input hidden id="userId" value="<%= user._id %>" />
               <input hidden id="userName" value="<%= user.name %>" />
+              <input hidden id="adminUser" value="<%= user.adminUser %>" />
               <input
                 hidden
                 id="userEmail"

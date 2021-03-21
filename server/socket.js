@@ -7,18 +7,22 @@ exports = module.exports = (io) => {
   io.on('connection', (socket) => {
     socket.on('userDataFromClient', (userId, userName) => {
       const channelName = getChannelName(socket.handshake.headers.referer);
-      socketUsers[socket.id] = { userId, userName, channelName};
+      socketUsers[socket.id] = { userId, userName, channelName };
       socket.leaveAll();
       socket.join(channelName);
       io.emit('socketUsersFromServer', socketUsers);
     });
 
-    socket.on('post', (post) => {
+    /* socket.on('post', (post) => {
       io.to(post.to).emit('postFromServer', post);
-    });
+    }); */
 
     socket.on('startPM', (PMuserId) => {
       console.log(PMuserId);
+    });
+
+    socket.on('postSaved', (newPost) => {
+      io.to(getChannelName(socket.handshake.headers.referer)).emit('postFromServer', newPost);
     });
 
     socket.on('disconnect', () => {

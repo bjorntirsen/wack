@@ -72,6 +72,18 @@ const utils = {
     const contentP = document.createElement('p');
     contentP.innerHTML = post.content;
     li.appendChild(contentP);
+    if (userId.toString() === post._id.toString() || adminUser === true) {
+      const span = document.createElement('span');
+      const aEdit = document.createElement('a');
+      aEdit.href = `/channels/editPost/${post._id}`;
+      aEdit.innerHTML = 'Edit';
+      span.appendChild(aEdit);
+      const aDelete = document.createElement('a');
+      aDelete.href = `/channels/deletePost/${post._id}`;
+      aDelete.innerHTML = 'Delete';
+      span.appendChild(aDelete);
+      li.appendChild(span);
+    }
     posts.appendChild(li);
   },
 };

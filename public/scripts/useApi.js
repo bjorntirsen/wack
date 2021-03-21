@@ -33,8 +33,8 @@ const useApi = {
       body: JSON.stringify(postBody),
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
+      .then(newPost => {
+        socket.emit('postSaved', newPost);
       });
   },
 };

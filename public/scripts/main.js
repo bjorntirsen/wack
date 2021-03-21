@@ -1,6 +1,7 @@
 //Global variables
 const userId = document.getElementById('userId').value;
 const userName = document.getElementById('userName').value;
+const adminUser = document.getElementById('adminUser').value;
 const submit_btn = document.getElementById('submit_btn');
 const channelId = window.location.href.split('/').slice(-1)[0];
 
