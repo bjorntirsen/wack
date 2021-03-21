@@ -23,14 +23,15 @@ const utils = {
       li.appendChild(img);
       const a = document.createElement('a');
       a.classList.add('user__li');
-      a.href = `../channels/startDM/${user._id}`;
+      a.href = `../channels/DMorProfile/${user._id}`;
       a.innerHTML = user.name;
       li.appendChild(a);
       usersUl.appendChild(li);
     });
   },
 
-  renderOnlineUserStatus: (socketUsers) => {
+  renderWhoIsOnline: (socketUsers) => {
+    document.querySelectorAll('.onlineSpan').forEach(e => e.remove());
     let arrayOfSocketUsers = Object.entries(socketUsers).map(
       (element) => element[1]
     );
@@ -38,20 +39,16 @@ const utils = {
       let onlineId = user.userId + 'online';
       if (document.getElementById(onlineId) === null) {
         const item = document.createElement('span');
-        item.textContent = 'online';
+        item.innerHTML = ' online';
+        item.classList.add('onlineSpan')
         if (user.userId === userId) {
-          item.textContent += ' (you)';
+          item.innerHTML += ' (you)';
         }
         item.id = user.userId + 'online';
         const onlineUser = document.getElementById(user.userId);
         onlineUser.appendChild(item);
       }
     });
-  },
-
-  removeOnlineStatusFrom: (diconnectedUserId) => {
-    const onlineSpan = document.getElementById(diconnectedUserId + 'online');
-    onlineSpan.remove();
   },
 
   makeFormattedTimeStamp: () => {

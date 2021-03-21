@@ -10,12 +10,8 @@ exports = module.exports = (io) => {
       socketUsers[socket.id] = { userId, userName, channelName };
       socket.leaveAll();
       socket.join(channelName);
-      io.emit('socketUsersFromServer', socketUsers);
+      io.emit('socketUsersUpdated', socketUsers);
     });
-
-    /* socket.on('post', (post) => {
-      io.to(post.to).emit('postFromServer', post);
-    }); */
 
     socket.on('startPM', (PMuserId) => {
       console.log(PMuserId);
@@ -27,8 +23,8 @@ exports = module.exports = (io) => {
 
     socket.on('disconnect', () => {
       if (socketUsers && socketUsers[socket.id]) {
-        io.emit('userOffline', socketUsers[socket.id].userId);
         delete socketUsers[socket.id];
+        io.emit('socketUsersUpdated', socketUsers);
       }
     });
   });

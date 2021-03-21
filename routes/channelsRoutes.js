@@ -85,17 +85,18 @@ router.post('/:id', ensureAuthenticated, (req, res) => {
   });
 });
 
-//Start DM route
-router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
-  if (req.params.recieverUserId === req.user._id.toString())
+//DM or profile
+router.get('/DMorProfile/:userId', ensureAuthenticated, (req, res) => {
+  if (req.params.userId === req.user._id.toString())
     res.redirect('/profile/');
   else {
     Channel.findOne({
       $and: [
         { private: true },
-        { members: { $all: [req.user._id, req.params.recieverUserId] } },
+        { members: { $all: [req.user._id, req.params.UserId] } },
       ],
     }).exec((err, channel) => {
+      if (err) return console.error(err);
       if (channel) {
         res.redirect(`/channels/${channel._id}`);
       } else {
@@ -104,7 +105,7 @@ router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
           name: 'DM_channel',
           description: 'DM_channel',
           private: true,
-          members: [req.user._id, req.params.recieverUserId],
+          members: [req.user._id, req.params.userId],
         });
         channel.save((err, channel) => {
           if (err) return console.error(err);
@@ -114,18 +115,6 @@ router.get('/startDM/:recieverUserId', ensureAuthenticated, (req, res) => {
       }
     });
   }
-});
-
-router.post('/startPM/:PMrecieverEmail', (req, res) => {
-  //TODO check if channel exists aleady
-  console.log('inside startPM POST route');
-  console.log(req.user);
-  console.log(req.params.PMrecieverEmail);
-  res.render('pm_create', {
-    cssdir: '/',
-    user: req.user,
-    PMreciever: req.params.PMrecieverEmail,
-  });
 });
 
 module.exports = router;

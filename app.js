@@ -1,17 +1,17 @@
+const path = require('path');
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const path = require('path');
 const expressEjsLayout = require('express-ejs-layouts');
 const fileUpload = require('express-fileupload');
 const flash = require('connect-flash');
-const session = require('express-session');
 const passport = require('passport');
+const session = require('express-session');
 require('./config/passport')(passport);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-require('./server/socket')(io);
+require('./socket')(io);
 
+const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/wack', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -22,18 +22,11 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-app.set('view engine', 'ejs');
-
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use(express.urlencoded({ extended: true }));
-app.use(expressEjsLayout);
 app.use(
   session({
     secret: 'blablabla',
     resave: true,
     saveUninitialized: true,
-    cookie: { expires: new Date(Date.now() + 30 * 86400 * 1000) },
   })
 );
 app.use(passport.initialize());
@@ -45,6 +38,12 @@ app.use((req, res, next) => {
   res.locals.error = req.flash('error');
   next();
 });
+
+app.set('view engine', 'ejs');
+app.use(expressEjsLayout);
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.urlencoded({ extended: true }));
 app.use(
   fileUpload({
     createParentPath: true,
