@@ -1,11 +1,14 @@
 <%- include ('./partials/sidebar') %>
-<%- include ('./partials/messages') %>
 <main class="container main__container">
+  <%- include ('./partials/messages') %>
   <% if (typeof channel!=='undefined') { %>
     <section class="row">
       <div class="col__posts">
         <h2><%= channel.name %></h2>
-        <h3 class="col__header">Posts in channel</h3>
+        <% if (channel.description !== '') { %>
+          <h3 class="col__header"><%= channel.description %></h3>
+        <% } %>
+        <h4 class="col__header">Posts in channel</h4>
         <ul id="posts">
           <% if (channel.posts.length > 0) { %>
             <% channel.posts.forEach(post => { %>

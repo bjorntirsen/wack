@@ -87,8 +87,7 @@ router.post('/:id', ensureAuthenticated, (req, res) => {
 
 //DM or profile
 router.get('/DMorProfile/:userId', ensureAuthenticated, (req, res) => {
-  if (req.params.userId === req.user._id.toString())
-    res.redirect('/profile/');
+  if (req.params.userId === req.user._id.toString()) res.redirect('/profile/');
   else {
     Channel.findOne({
       $and: [
@@ -115,6 +114,41 @@ router.get('/DMorProfile/:userId', ensureAuthenticated, (req, res) => {
       }
     });
   }
+});
+
+router.get('/editPost/:postId', ensureAuthenticated, (req, res) => {
+  Post.findById(req.params.postId)
+    .populate('by')
+    .exec((err, post) => {
+      if (err) return console.error(err);
+      res.render('edit_post', {
+        post,
+        cssdir: '/',
+        user: req.user,
+      });
+    });
+});
+
+router.post('/editPost/:postId', ensureAuthenticated, (req, res) => {
+  const newContent = req.body.postContent;
+  Post.findByIdAndUpdate(
+    { _id: req.params.postId },
+    { $set: { content: newContent } }
+  ).exec((err, data) => {
+    if (err) return console.error(err);
+    console.log(data);
+    req.flash('success_msg', 'Post sucessfully updated.');
+    res.redirect('/channels');
+  });
+});
+
+router.get('/deletePost/:postId', ensureAuthenticated, (req, res) => {
+  Post.findByIdAndDelete(req.params.postId).exec((err, data) => {
+    if (err) return console.error(err);
+    console.log(data);
+    req.flash('success_msg', 'Post sucessfully deleted.');
+    res.redirect('/channels');
+  });
 });
 
 module.exports = router;

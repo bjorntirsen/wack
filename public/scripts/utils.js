@@ -4,7 +4,7 @@ const utils = {
       const li = document.createElement('li');
       li.classList.add('channel__li');
       const a = document.createElement('a');
-      a.href = `../channels/${channel._id}`;
+      a.href = `/channels/${channel._id}`;
       a.innerHTML = `#${channel.name}`;
       li.appendChild(a);
       channels.insertBefore(li, create);
@@ -23,7 +23,7 @@ const utils = {
       li.appendChild(img);
       const a = document.createElement('a');
       a.classList.add('user__li');
-      a.href = `../channels/DMorProfile/${user._id}`;
+      a.href = `/channels/DMorProfile/${user._id}`;
       a.innerHTML = user.name;
       li.appendChild(a);
       usersUl.appendChild(li);

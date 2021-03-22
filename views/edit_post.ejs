@@ -3,19 +3,21 @@
 <main class="container main__container">
   <div class="card">
     <h1>Edit post</h1>
-    <h2>Made to channel</h2>
-    <form method="POST" action="/profile">
-      <span>Name:</span><br />
-      <input type="text" name="newUserName" value="<%= user.name %>" /><br />
-      <span>Email:</span><br />
-      <input type="text" name="newUserEmail" value="<%= user.email %>" /><br />
-      <input type="submit" class="btn" value="Send changes" />
+    <p>Made:</p>
+    <p><%= post.date %></p>
+    <p>By:</p>
+    <p><%= post.by.name %></p>
+    <form method="POST" action="/channels/editPost/<%= post._id %>">
+      <span>Content:</span><br />
+      <textarea name="postContent" cols="30" rows="7" ><%= post.content %></textarea><br />
+      <input type="submit" class="btn" value="Update post" />
+      <a href="/channels/deletePost/<%= post._id %>" class="btn" role="button" value="Delete Post" >Delete Post</a>
     </form>
   </div>
 </main>
 <!-- ----------JAVASCRIPT---------- -->
-<script src="../socket.io/socket.io.js"></script>
-<script src="../public/scripts/utils.js"></script>
-<script src="../public/scripts/useApi.js"></script>
-<script src="../public/scripts/useSocket.js"></script>
-<script src="../public/scripts/main.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/public/scripts/utils.js"></script>
+<script src="/public/scripts/useApi.js"></script>
+<script src="/public/scripts/useSocket.js"></script>
+<script src="/public/scripts/main.js"></script>
