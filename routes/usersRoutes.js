@@ -28,7 +28,8 @@ router.post('/register', (req, res) => {
     errors.push({ msg: 'Your password must be at least 6 characters long.' });
   }
   if (errors.length > 0) {
-    res.render('register', {
+    res.render('signup', {
+      cssdir: '/',
       errors: errors,
       name: name,
       email: email,
