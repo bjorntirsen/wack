@@ -64,12 +64,12 @@ const utils = {
     const li = document.createElement('li');
     li.classList.add('channel__li');
     const bySpan = document.createElement('span');
-    bySpan.innerHTML = `By ${post.byName} ${utils.makeFormattedTimeStamp()}`;
+    bySpan.innerHTML = `By ${post.by.name} ${utils.makeFormattedTimeStamp()}`;
     li.appendChild(bySpan);
     const contentP = document.createElement('p');
     contentP.innerHTML = post.content;
     li.appendChild(contentP);
-    if (userId.toString() === post._id.toString() || adminUser === true) {
+    if (userId.toString() === post.by._id.toString() || adminUser === true) {
       const span = document.createElement('span');
       const aEdit = document.createElement('a');
       aEdit.href = `/channels/editPost/${post._id}`;

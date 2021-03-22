@@ -1,4 +1,7 @@
+const Post = require('./models/post');
+
 exports = module.exports = (io) => {
+  
   function getChannelName(socketReferer) {
     return socketReferer.split('/').slice(-1)[0];
   }
@@ -18,7 +21,16 @@ exports = module.exports = (io) => {
     });
 
     socket.on('postSaved', (newPost) => {
-      io.to(getChannelName(socket.handshake.headers.referer)).emit('postFromServer', newPost);
+      Post.findById(newPost._id)
+        .populate('by')
+        .exec((err, post) => {
+          if (err) return console.log(err);
+          console.log(post)
+          io.to(getChannelName(socket.handshake.headers.referer)).emit(
+            'postFromServer',
+            post
+          );
+        });
     });
 
     socket.on('disconnect', () => {

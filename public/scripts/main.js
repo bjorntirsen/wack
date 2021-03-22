@@ -16,7 +16,6 @@ if (document.getElementById('submit_btn') !== null) {
   document.getElementById('submit_btn').addEventListener('click', (e) => {
     e.preventDefault();
     useApi.sendPostToServer();
-    useSocket.emitPost();
     document.getElementById('content').value = '';
   });
 }

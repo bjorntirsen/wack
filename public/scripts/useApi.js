@@ -24,7 +24,7 @@ const useApi = {
   },
 
   sendPostToServer: () => {
-    const postBody = { content: document.getElementById('content').value };
+    const postBody = { content: document.getElementById('content').value, by: userId };
     fetch(`/api/channels/${channelId}`, {
       method: 'POST',
       headers: {
