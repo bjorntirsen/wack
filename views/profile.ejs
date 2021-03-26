@@ -1,10 +1,10 @@
 <%- include ('./partials/sidebar') %>
-<%- include ('./partials/messages') %>
 <main class="container main__container">
   <div class="card">
     <h1>This is your profile page</h1>
     <h2>Feel free to edit your details</h2>
-    <form method="POST" action="/profile">
+    <%- include ('./partials/messages') %>
+    <form method="POST" action="/users/profile">
       <span>Name:</span><br />
       <input type="text" name="newUserName" value="<%= user.name %>" /><br />
       <span>Email:</span><br />
@@ -16,7 +16,7 @@
     <form
       method="POST"
       enctype="multipart/form-data"
-      action="/profile/uploadPhoto"
+      action="/users/profile/uploadPhoto"
     >
       <img
         class="medium_image"
@@ -37,9 +37,9 @@
   </div>
 </main>
 <!-- ----------JAVASCRIPT---------- -->
-<script src="../socket.io/socket.io.js"></script>
-<script src="../public/scripts/utils.js"></script>
-<script src="../public/scripts/useApi.js"></script>
-<script src="../public/scripts/useSocket.js"></script>
-<script src="../public/scripts/main.js"></script>
-<script src="../public/scripts/profile.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/public/scripts/utils.js"></script>
+<script src="/public/scripts/useApi.js"></script>
+<script src="/public/scripts/useSocket.js"></script>
+<script src="/public/scripts/main.js"></script>
+<script src="/public/scripts/profile.js"></script>

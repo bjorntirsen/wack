@@ -53,13 +53,11 @@ app.use(
 const indexRouter = require('./routes/indexRoutes');
 const usersRouter = require('./routes/usersRoutes');
 const channelsRouter = require('./routes/channelsRoutes');
-const profileRouter = require('./routes/profileRoutes');
 const apiRouter = require('./routes/apiRoutes');
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/channels', channelsRouter);
-app.use('/profile', profileRouter);
 app.use('/api', apiRouter);
 
 http.listen(3000, () => {

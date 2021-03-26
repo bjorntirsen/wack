@@ -54,7 +54,7 @@ exports.renderChannel = (req, res) => {
 };
 
 exports.renderProfileOrDM = (req, res) => {
-  if (req.params.userId === req.user._id.toString()) res.redirect('/profile/');
+  if (req.params.userId === req.user._id.toString()) res.redirect('/users/profile/');
   else {
     Channel.findOne({
       $and: [

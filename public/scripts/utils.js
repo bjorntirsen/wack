@@ -31,7 +31,7 @@ const utils = {
   },
 
   renderWhoIsOnline: (socketUsers) => {
-    document.querySelectorAll('.onlineSpan').forEach(e => e.remove());
+    document.querySelectorAll('.onlineSpan').forEach((e) => e.remove());
     let arrayOfSocketUsers = Object.entries(socketUsers).map(
       (element) => element[1]
     );
@@ -40,7 +40,7 @@ const utils = {
       if (document.getElementById(onlineId) === null) {
         const item = document.createElement('span');
         item.innerHTML = ' online';
-        item.classList.add('onlineSpan')
+        item.classList.add('onlineSpan');
         if (user.userId === userId) {
           item.innerHTML += ' (you)';
         }
