@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const { ensureAuthenticated } = require('../config/auth.js');
+const { ensureAuthenticated } = require('../controllers/authController');
 
 router.use(express.urlencoded({ extended: true }));
 

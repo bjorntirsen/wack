@@ -1,5 +1,4 @@
-<% if (typeof title==='undefined' ) { title='Wack' } %> <% if (typeof
-cssdir==='undefined' ) { cssdir='' } %>
+<% if (typeof title==='undefined' ) { title='Wack' } %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +11,7 @@ cssdir==='undefined' ) { cssdir='' } %>
       href="https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald:wght@700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="<%= cssdir %>public/styles/style.css" />
+    <link rel="stylesheet" href="/public/styles/style.css" />
   </head>
   <body>
     <header>
@@ -38,7 +37,7 @@ cssdir==='undefined' ) { cssdir='' } %>
               <li class="nav__item">
                 <a
                   class="nav__link btn nav__btn"
-                  href="<%= cssdir %>users/signout"
+                  href="/users/signout"
                   >sign out</a
                 >
               </li>

@@ -36,5 +36,5 @@ const useApi = {
       .then(newPost => {
         socket.emit('postSaved', newPost);
       });
-  },
+  }
 };

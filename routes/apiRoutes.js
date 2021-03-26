@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 router.use(express.json());
-const { ensureAuthenticated } = require('../config/auth.js');
+const { ensureAuthenticated } = require('./../controllers/authController');
 const apiController = require('./../controllers/apiController');
 
 router

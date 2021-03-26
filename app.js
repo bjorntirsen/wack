@@ -6,7 +6,7 @@ const fileUpload = require('express-fileupload');
 const flash = require('connect-flash');
 const passport = require('passport');
 const session = require('express-session');
-require('./config/passport')(passport);
+require('./controllers/passportController')(passport);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 require('./socket')(io);
