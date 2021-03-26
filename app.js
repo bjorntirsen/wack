@@ -9,7 +9,7 @@ const session = require('express-session');
 require('./controllers/passportController')(passport);
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
-require('./socket')(io);
+require('./controllers/socketController')(io);
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/wack', {

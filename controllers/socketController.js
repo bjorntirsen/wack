@@ -1,4 +1,4 @@
-const Post = require('./models/post');
+const Post = require('../models/post');
 
 exports = module.exports = (io) => {
   
@@ -16,16 +16,11 @@ exports = module.exports = (io) => {
       io.emit('socketUsersUpdated', socketUsers);
     });
 
-    socket.on('startPM', (PMuserId) => {
-      console.log(PMuserId);
-    });
-
     socket.on('postSaved', (newPost) => {
       Post.findById(newPost._id)
         .populate('by')
         .exec((err, post) => {
           if (err) return console.log(err);
-          console.log(post)
           io.to(getChannelName(socket.handshake.headers.referer)).emit(
             'postFromServer',
             post
