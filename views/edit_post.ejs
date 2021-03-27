@@ -7,11 +7,11 @@
     <p><%= post.date %></p>
     <p>By:</p>
     <p><%= post.by.name %></p>
-    <form method="POST" action="/channels/editPost/<%= post._id %>">
+    <form method="POST" action="/channels/editPost/<%= channelId %>/<%= post._id %>">
       <span>Content:</span><br />
       <textarea name="postContent" cols="30" rows="7" ><%= post.content %></textarea><br />
       <input type="submit" class="btn" value="Update post" />
-      <a href="/channels/deletePost/<%= post._id %>" class="btn" role="button" value="Delete Post" >Delete Post</a>
+      <a href="/channels/deletePost/<%= channelId %>/<%= post._id %>" class="btn" role="button" value="Delete Post" >Delete Post</a>
     </form>
   </div>
 </main>

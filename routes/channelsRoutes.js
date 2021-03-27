@@ -19,12 +19,12 @@ router.get(
 );
 
 router
-  .route('/editPost/:postId')
+  .route('/editPost/:channelId/:postId')
   .get(ensureAuthenticated, channelsController.renderEditPost)
   .post(ensureAuthenticated, channelsController.editPost);
 
 router.get(
-  '/deletePost/:postId',
+  '/deletePost/:channelId/:postId',
   ensureAuthenticated,
   channelsController.deletePost
 );

@@ -1,6 +1,5 @@
 const Channel = require('../models/channel');
 const Post = require('../models/post');
-const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
 
 exports.renderDashboard = (req, res) => {
   res.render('channels', {
@@ -42,12 +41,11 @@ exports.renderChannel = (req, res) => {
       if (err) {
         console.log(err);
         req.flash('error_msg', 'The requested channel does not exist.');
-        res.redirect('/');
+        res.redirect('/channels');
       } else {
         res.render('channels', {
           channel,
           user: req.user,
-          date_options,
         });
       }
     });
@@ -90,6 +88,7 @@ exports.renderEditPost = (req, res) => {
       res.render('edit_post', {
         post,
         user: req.user,
+        channelId: req.params.channelId,
       });
     });
 };
@@ -101,17 +100,15 @@ exports.editPost = (req, res) => {
     { $set: { content: newContent } }
   ).exec((err, data) => {
     if (err) return console.error(err);
-    console.log(data);
     req.flash('success_msg', 'Post sucessfully updated.');
-    res.redirect('/channels');
+    res.redirect(`/channels/${req.params.channelId}`);
   });
 };
 
 exports.deletePost = (req, res) => {
   Post.findByIdAndDelete(req.params.postId).exec((err, data) => {
     if (err) return console.error(err);
-    console.log(data);
     req.flash('success_msg', 'Post sucessfully deleted.');
-    res.redirect('/channels');
+    res.redirect(`/channels/${req.params.channelId}`);
   });
 };

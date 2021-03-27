@@ -51,7 +51,7 @@ const utils = {
     });
   },
 
-  makeFormattedTimeStamp: () => {
+  formattedDate: () => {
     function addZero(i) {
       if (i < 10) {
         i = '0' + i;
@@ -70,7 +70,7 @@ const utils = {
     const li = document.createElement('li');
     li.classList.add('channel__li');
     const bySpan = document.createElement('span');
-    bySpan.innerHTML = `By ${post.by.name} ${utils.makeFormattedTimeStamp()}`;
+    bySpan.innerHTML = `By ${post.by.name} ${utils.formattedDate()}`;
     li.appendChild(bySpan);
     const contentP = document.createElement('p');
     contentP.innerHTML = post.content;
