@@ -52,11 +52,17 @@ const utils = {
   },
 
   makeFormattedTimeStamp: () => {
+    function addZero(i) {
+      if (i < 10) {
+        i = '0' + i;
+      }
+      return i;
+    }
     const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
     const dateObj = new Date();
     const date = dateObj.toLocaleDateString('en-gb', date_options);
-    const hours = dateObj.getHours();
-    const minutes = dateObj.getMinutes() < 10 ? '0' : '' + dateObj.getMinutes();
+    const hours = addZero(dateObj.getHours());
+    const minutes = addZero(dateObj.getMinutes());
     return `on ${date} at ${hours}:${minutes}:`;
   },
 

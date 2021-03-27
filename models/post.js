@@ -25,4 +25,19 @@ const postSchema = Schema({
   },
 });
 
+postSchema.virtual('formattedDate').get(function () {
+  function addZero(i) {
+    if (i < 10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const dateObj = this.date;
+  const date = dateObj.toLocaleDateString('en-gb', date_options);
+  const hours = addZero(dateObj.getHours());
+  const minutes = addZero(dateObj.getMinutes());
+  return `on ${date} at ${hours}:${minutes}:`;
+});
+
 module.exports = mongoose.model('Post', postSchema);

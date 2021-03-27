@@ -13,11 +13,7 @@
           <% if (channel.posts.length > 0) { %>
             <% channel.posts.forEach(post => { %>
               <li class="channel__li">
-                <span>By <%= post.by.name %></>
-                  <% let formatted_date = post.date.toLocaleDateString('en-gb', date_options) %>
-                  <% let hours = post.date.getHours() %>
-                  <% let minutes = post.date.getMinutes()<10?'0':'' + post.date.getMinutes() %>
-                  <span> on <%= formatted_date %> at <%= hours %>:<%= minutes %>:</span>
+                <span>By <%= post.by.name %> <%= post.formattedDate %></span>
                   <p><%= post.content %></p>
                   <% if (user._id.toString() === post.by._id.toString() || user.adminUser === true) { %>
                     <span>
