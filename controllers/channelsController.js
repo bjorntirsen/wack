@@ -57,9 +57,10 @@ exports.renderProfileOrDM = (req, res) => {
     Channel.findOne({
       $and: [
         { private: true },
-        { members: { $all: [req.user._id, req.params.UserId] } },
+        { members: { $all: [req.user._id, req.params.userId] } },
       ],
     }).exec((err, channel) => {
+      console.log(channel)
       if (err) return console.error(err);
       if (channel) {
         res.redirect(`/channels/${channel._id}`);
