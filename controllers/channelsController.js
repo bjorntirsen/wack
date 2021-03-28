@@ -98,7 +98,7 @@ exports.editPost = (req, res) => {
   Post.findByIdAndUpdate(
     { _id: req.params.postId },
     { $set: { content: newContent } }
-  ).exec((err, data) => {
+  ).exec((err) => {
     if (err) return console.error(err);
     req.flash('success_msg', 'Post sucessfully updated.');
     res.redirect(`/channels/${req.params.channelId}`);
@@ -106,7 +106,7 @@ exports.editPost = (req, res) => {
 };
 
 exports.deletePost = (req, res) => {
-  Post.findByIdAndDelete(req.params.postId).exec((err, data) => {
+  Post.findByIdAndDelete(req.params.postId).exec((err) => {
     if (err) return console.error(err);
     req.flash('success_msg', 'Post sucessfully deleted.');
     res.redirect(`/channels/${req.params.channelId}`);
