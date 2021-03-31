@@ -11,8 +11,8 @@ const mongoose = require('mongoose');
 
 dotenv.config({ path: './config.env' });
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
 require('./controllers/socketController')(io);
 
 const DB = process.env.DATABASE.replace(
@@ -66,7 +66,7 @@ app.use('/channels', channelsRouter);
 app.use('/api', apiRouter);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
 
