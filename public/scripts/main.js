@@ -175,7 +175,7 @@ if (document.getElementById('submit_btn') !== null) {
 
 if (document.getElementById('profile_pic') !== null) {
   const profilePicInput = document.getElementById('profile_pic');
-  const label = input.nextElementSibling;
+  const label = profilePicInput.nextElementSibling;
   const labelVal = label.innerHTML;
 
   profilePicInput.addEventListener('change', (e) => {
