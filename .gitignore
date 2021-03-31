@@ -123,4 +123,5 @@ uploads/
 # my prettier config
 .prettierrc
 
+.cache
 .cache/
