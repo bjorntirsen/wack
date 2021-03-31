@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const channelSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'A channel must have a name'],
     minLength: 1,
     maxLength: 100,
   },
   by: {
     type: Schema.Types.ObjectId,
     ref: 'by',
-    required: true,
+    required: [true, 'A channel must have a creator'],
   },
   description: {
     type: String,

@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+
+const { Schema } = mongoose;
 
 const postSchema = Schema({
   by: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
+    required: [true, 'A post must have creator'],
   },
   content: {
     type: String,
-    required: true,
+    required: [true, 'A post must have content'],
     minLength: 1,
     maxLength: 1000,
   },
@@ -28,13 +29,13 @@ const postSchema = Schema({
 postSchema.virtual('formattedDate').get(function () {
   function addZero(i) {
     if (i < 10) {
-      i = '0' + i;
+      i = `0${i}`;
     }
     return i;
   }
-  const date_options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   const dateObj = this.date;
-  const date = dateObj.toLocaleDateString('en-gb', date_options);
+  const date = dateObj.toLocaleDateString('en-gb', dateOptions);
   const hours = addZero(dateObj.getHours());
   const minutes = addZero(dateObj.getMinutes());
   return `on ${date} at ${hours}:${minutes}:`;

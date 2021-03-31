@@ -1,11 +1,10 @@
 const Post = require('../models/post');
 
-exports = module.exports = (io) => {
-  
+module.exports = (io) => {
   function getChannelName(socketReferer) {
     return socketReferer.split('/').slice(-1)[0];
   }
-  let socketUsers = {};
+  const socketUsers = {};
 
   io.on('connection', (socket) => {
     socket.on('userDataFromClient', (userId, userName) => {
