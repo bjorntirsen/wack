@@ -7,8 +7,10 @@ module.exports = (io) => {
   const socketUsers = {};
 
   io.on('connection', (socket) => {
-    socket.on('userDataFromClient', (userId, userName) => {
-      const channelName = getChannelName(socket.handshake.headers.referer);
+    socket.on('userDataFromClient', async (userId, userName) => {
+      const channelName = await getChannelName(
+        socket.handshake.headers.referer
+      );
       socketUsers[socket.id] = { userId, userName, channelName };
       socket.leaveAll();
       socket.join(channelName);

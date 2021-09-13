@@ -158,11 +158,13 @@ const emitUserData = () => {
 
 //Event listeners
 
-document.addEventListener('DOMContentLoaded', (e) => {
+document.addEventListener('DOMContentLoaded', async (e) => {
   e.preventDefault();
   fetchChannels();
   fetchUsers();
-  emitUserData();
+  setTimeout(() => {
+    emitUserData();
+  }, 500);
 });
 
 if (document.getElementById('submit_btn') !== null) {
