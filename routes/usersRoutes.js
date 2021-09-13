@@ -19,7 +19,8 @@ router
 router.post(
   '/profile/uploadPhoto',
   ensureAuthenticated,
-  usersController.uploadPhoto
+  usersController.uploadPhoto,
+  usersController.afterUpload
 );
 
 module.exports = router;

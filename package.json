@@ -14,16 +14,18 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cloudinary": "^1.27.0",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
-    "express-fileupload": "^1.2.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.1",
     "mongoose": "^5.11.19",
+    "multer": "^1.4.3",
+    "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
@@ -43,6 +45,6 @@
     "prettier": "^2.2.1"
   },
   "engines": {
-    "node": "14.15.1"
+    "node": "14.17.0"
   }
 }

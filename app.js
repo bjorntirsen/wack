@@ -1,7 +1,6 @@
 const path = require('path');
 const express = require('express');
 const expressEjsLayout = require('express-ejs-layouts');
-const fileUpload = require('express-fileupload');
 const flash = require('connect-flash');
 const passport = require('passport');
 const session = require('express-session');
@@ -47,13 +46,7 @@ app.use((req, res, next) => {
 app.set('view engine', 'ejs');
 app.use(expressEjsLayout);
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  fileUpload({
-    createParentPath: true,
-  })
-);
 
 const indexRouter = require('./routes/indexRoutes');
 const usersRouter = require('./routes/usersRoutes');

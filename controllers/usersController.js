@@ -1,6 +1,11 @@
+const multer = require('multer');
+
+const catchAsync = require('../utils/catchAsync');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
+const { storage } = require('./cloudinary');
+const parser = multer({ storage });
 
 exports.handleRegister = (req, res) => {
   const { name, email, password, password2 } = req.body;
@@ -91,25 +96,18 @@ exports.changeNameOrEmail = (req, res) => {
   });
 };
 
-exports.uploadPhoto = (req, res) => {
-  try {
-    if (req.files) {
-      const profile_pic = req.files.profile_pic;
-      const extension = profile_pic.name.split('.').slice(-1)[0];
-      const file_name = `/uploads/${req.user._id}.${extension}`;
-      profile_pic.mv(`.${file_name}`);
-      User.updateOne(
-        { _id: req.user._id },
-        { $set: { profilePhoto: file_name } }
-      ).exec((error, data) => {
-        if (error) console.log(error);
-        req.flash('success_msg', 'Sucessfully uploaded photo.');
-        res.redirect(`/users/profile/`);
-      });
-    } else {
-      res.render('<h1>Error: No file uploaded.</h1>');
-    }
-  } catch (error) {
+exports.uploadPhoto = parser.single('profile_pic');
+
+exports.afterUpload = catchAsync(async (req, res) => {
+  const data = { profilePhoto: req.file.path };
+  const user = await User.findByIdAndUpdate(req.user._id, data, {
+    new: true,
+    runValidators: true,
+  });
+  if (!user) {
+    console.log(error);
     res.send(error);
   }
-};
+  req.flash('success_msg', 'Sucessfully uploaded photo.');
+  res.redirect(`/users/profile/`);
+});
