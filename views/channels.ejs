@@ -29,10 +29,12 @@
     </section>
     <section class="container input__container">
       <form id="form2" class="form" method="post" action="../api/<%= channel.id %>" autocomplete="off">
-        <div class="f-grow-1">
-          <textarea id="content" class="w-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
+        <div class="f-grow-1 d-flex j-cont-center">
+          <textarea id="content" class="w-100 h-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
         </div>
-        <input id="submit_btn" class="btn btn__post" type="button" value="Post" />
+        <div class="btn__container d-flex">
+          <input id="submit_btn" class="btn btn__post" type="button" value="Post" />
+        </div>
       </form>
     </section>
   <% } else { %>
