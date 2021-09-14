@@ -1,12 +1,14 @@
-<%- include ('./partials/sidebar') %>
-<main class="container main__container">
-  <%- include ('./partials/messages') %>
-  <% if (typeof channel!=='undefined') { %>
+
+<main class="logged-in">
+  <div class="container">
+    <%- include ('./partials/sidebar') %>
+    <%- include ('./partials/messages') %> <% if (typeof channel!=='undefined')
+    { %>
     <section class="row">
       <div class="col__posts">
         <h2><%= channel.name %></h2>
         <% if (channel.description !== '') { %>
-          <h3 class="col__header"><%= channel.description %></h3>
+        <h3 class="col__header"><%= channel.description %></h3>
         <% } %>
         <h4 class="col__header">Posts in channel</h4>
         <ul id="posts">
@@ -14,35 +16,65 @@
             <% channel.posts.forEach(post => { %>
               <li class="channel__li">
                 <span>By <%= post.by.name %> <%= post.formattedDate %></span>
-                  <p><%= post.content %></p>
-                  <% if (user._id.toString() === post.by._id.toString() || user.adminUser === true) { %>
-                    <span>
-                      <a href="/channels/editPost/<%= channel._id %>/<%= post._id %>" >Edit</a>
-                      <a href="/channels/deletePost/<%= channel._id %>/<%= post._id %>" >Delete</a>
-                    </span>
-                  <% } %>
-                </li>
-              <% }) %>
+                <p><%= post.content %></p>
+                <% if (user._id.toString() === post.by._id.toString() ||
+                user.adminUser === true) { %>
+                  <span>
+                    <a href="/channels/editPost/<%= channel._id %>/<%= post._id %>"
+                      >Edit</a>
+                    <a href="/channels/deletePost/<%= channel._id %>/<%= post._id %>"
+                      >Delete</a>
+                  </span>
+                <% } %>
+              </li>
+            <% }) %> 
           <% } %>
         </ul>
       </div>
     </section>
-    <section class="container input__container">
-      <form id="form2" class="form" method="post" action="../api/<%= channel.id %>" autocomplete="off">
-        <div class="f-grow-1 d-flex j-cont-center">
-          <textarea id="content" class="w-100 h-100" name="content" autocomplete="off" placeholder="Post content" rows="4" cols="50" required /></textarea>
-        </div>
-        <div class="btn__container d-flex">
-          <input id="submit_btn" class="btn btn__post" type="button" value="Post" />
-        </div>
-      </form>
+    <section class="input__section">
+      <div class="input__container">
+        <form
+          id="form2"
+          class="form"
+          method="post"
+          action="../api/<%= channel.id %>"
+          autocomplete="off"
+        >
+          <div class="f-grow-1 d-flex j-cont-center">
+            <textarea
+              id="content"
+              class="w-100 h-100"
+              name="content"
+              autocomplete="off"
+              placeholder="Message"
+              rows="4"
+              cols="50"
+              required
+            ></textarea>
+          </div>
+          <div class="input-btn__container d-flex">
+            <input
+              id="submit_btn"
+              class="btn btn__post"
+              type="button"
+              value="Post"
+            />
+          </div>
+        </form>
+      </div>
     </section>
-  <% } else { %>
-    <section class="row">
-      <h1>Welcome <%= user.name %></h1>
-    </section>
-  <% } %>
+    <% } else { %>
+      <section class="row">
+        <h1>Welcome <%= user.name %></h1>
+      </section>
+    <% } %>
+  </div>
 </main>
 <!-- ----------JAVASCRIPT---------- -->
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js" integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy" crossorigin="anonymous"></script>
+<script
+  src="https://cdn.socket.io/4.0.0/socket.io.min.js"
+  integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy"
+  crossorigin="anonymous"
+></script>
 <script src="/public/scripts/main.js"></script>

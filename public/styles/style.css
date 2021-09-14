@@ -4,18 +4,30 @@
   box-sizing: border-box;
 }
 
+a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: inherit;
+}
+
 :root {
   --black: #2e323f;
   --dark: #3b4050;
+  --gray: #6f737f;
+  --lightgray: #f1f1f1;
   --secondary: #e1e0e0;
   --white: #fff;
-  --third: #a59678;
+  --primary: #a59678;
 }
 
 body {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 16px; /* 16px */
+  font-size: 1rem; /* 16px */
   margin: 0;
   padding: 0;
 }
@@ -25,6 +37,8 @@ header {
   font-weight: 700;
   text-transform: uppercase;
   font-size: 1.125rem; /* 18px */
+  background-color: var(--black);
+  color: var(--white);
 }
 
 .container {
@@ -34,6 +48,8 @@ header {
   max-width: 1200px;
 }
 
+/* Nav specific */
+
 .nav__container {
   padding: 0.2em 0;
 }
@@ -41,6 +57,13 @@ header {
 .logo__wrapper {
   margin-top: auto;
   margin-bottom: auto;
+  max-height: 40px;
+}
+
+.logo__img {
+  width: auto;
+  height: 100%;
+  max-height: 38px;
 }
 
 .nav__list,
@@ -68,7 +91,10 @@ header {
   opacity: 0.5;
 }
 
-.btn, .inputfile + label {
+/* Buttons */
+
+.btn,
+.inputfile + label {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: 1rem;
@@ -78,21 +104,23 @@ header {
   margin: 0.2rem;
   border: none;
   text-transform: uppercase;
-  background-color: lightgray;
+  background-color: var(--primary);
   cursor: pointer;
 }
 
-.btn:hover, .inputfile:focus + label,
+.btn:hover,
+.inputfile:focus + label,
 .inputfile + label:hover {
   text-decoration: none;
   opacity: 0.5;
 }
 
-.btn:focus, .inputfile:focus + label {
+.btn:focus,
+.inputfile:focus + label {
   text-decoration: none;
   opacity: 0.5;
   outline: 1px dotted #000;
-	outline: -webkit-focus-ring-color auto 5px;
+  outline: -webkit-focus-ring-color auto 5px;
 }
 
 .btn__medium {
@@ -101,6 +129,7 @@ header {
 
 .btn__large {
   font-size: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--white);
 }
 
 .btn__post {
@@ -109,17 +138,65 @@ header {
   margin: 0 auto;
 }
 
+main {
+  height: 100%;
+  min-height: calc(100vh - 51px);
+}
+
+/* Landing main specific */
+main.landing {
+  background-color: var(--dark);
+}
+
+.main-title {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 5rem);
+  margin: 0.3em;
+}
+
+.title {
+  color: var(--white);
+}
+
+.subtitle {
+  color: var(--primary);
+}
+
+/* Sign in sign up specific */
+
+main.sign-in-up {
+  background-color: var(--lightgray);
+}
+
+.sign-in-up__title {
+  font-family: 'Oswald', sans-serif;
+  padding-top: 1em;
+  margin-top: 0;
+  color: var(--primary);
+}
+
+/* Logged in specific */
+
+main.logged-in {
+  background-color: var(--lightgray);
+}
+
 .text-center {
   text-align: center;
 }
 
+.text-white {
+  color: var(--white);
+}
+
 .inputfile {
-	width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
 .medium_image {
@@ -150,13 +227,6 @@ header {
 
 .j-cont-center {
   justify-content: center;
-}
-
-.main-title {
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  font-size: clamp(2rem, 4vw, 5rem);
-  margin: 0.3em;
 }
 
 .channel__li {
@@ -193,22 +263,24 @@ header {
   margin-bottom: 0.5rem;
 }
 
-#form {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  height: 3rem;
-}
-
-.form {
+.input__section {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   display: block;
-  height: 7rem;
+  height: 8rem;
+}
+
+.input__container {
+  margin: 0 auto;
+  padding: 0;
+  width: 95%;
+  max-width: 1200px;
+}
+
+.input-btn__container {
+  padding: 0.5rem;
 }
 
 .f-grow-1 {
@@ -265,7 +337,7 @@ header {
 
 /* Media queries */
 
-@media (min-width: 500px) {
+@media (min-width: 700px) {
   .nav__container {
     display: flex;
     justify-content: space-between;
@@ -288,6 +360,10 @@ header {
   .row {
     display: flex;
     justify-content: space-between;
+  }
+
+  .input__section {
+    height: 6rem;
   }
 
   .form {

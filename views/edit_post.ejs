@@ -1,20 +1,37 @@
 <%- include ('./partials/sidebar') %>
-<%- include ('./partials/messages') %>
-<main class="container main__container">
-  <div class="card">
-    <h1>Edit post</h1>
-    <p>Made:</p>
-    <p><%= post.date %></p>
-    <p>By:</p>
-    <p><%= post.by.name %></p>
-    <form method="POST" action="/channels/editPost/<%= channelId %>/<%= post._id %>">
-      <span>Content:</span><br />
-      <textarea name="postContent" cols="30" rows="7" ><%= post.content %></textarea><br />
-      <input type="submit" class="btn" value="Update post" />
-      <a href="/channels/deletePost/<%= channelId %>/<%= post._id %>" class="btn" role="button" value="Delete Post" >Delete Post</a>
-    </form>
+<main class="logged-in">
+  <div class="container">
+    <%- include ('./partials/messages') %>
+    <div class="card">
+      <h1>Edit post</h1>
+      <p>Made:</p>
+      <p><%= post.date %></p>
+      <p>By:</p>
+      <p><%= post.by.name %></p>
+      <form
+        method="POST"
+        action="/channels/editPost/<%= channelId %>/<%= post._id %>"
+      >
+        <span>Content:</span><br />
+        <textarea name="postContent" cols="30" rows="7">
+<%= post.content %></textarea
+        ><br />
+        <input type="submit" class="btn" value="Update post" />
+        <a
+          href="/channels/deletePost/<%= channelId %>/<%= post._id %>"
+          class="btn"
+          role="button"
+          value="Delete Post"
+          >Delete Post</a
+        >
+      </form>
+    </div>
   </div>
 </main>
 <!-- ----------JAVASCRIPT---------- -->
-<script src="https://cdn.socket.io/4.0.0/socket.io.min.js" integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy" crossorigin="anonymous"></script>
+<script
+  src="https://cdn.socket.io/4.0.0/socket.io.min.js"
+  integrity="sha384-DkkWv9oJFWLIydBXXjkBWnG1/fuVhw8YPBq37uvvD6WSYRFRqr21eY5Dg9ZhmWdy"
+  crossorigin="anonymous"
+></script>
 <script src="/public/scripts/main.js"></script>

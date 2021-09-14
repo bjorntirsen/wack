@@ -7,6 +7,7 @@ const session = require('express-session');
 require('./controllers/passportController')(passport);
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+const favicon = require('serve-favicon');
 
 dotenv.config({ path: './config.env' });
 const app = express();
@@ -26,9 +27,11 @@ mongoose
   })
   .then(() => console.log('DB connection successful!'));
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+
 app.use(
   session({
-    secret: 'blablabla',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
   })
